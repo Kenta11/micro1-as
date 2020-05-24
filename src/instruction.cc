@@ -18,6 +18,13 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+/**
+ * @file instruction.cc
+ * @brief Inplementation of instruction utility
+ * @author Kenta Arai
+ * @date 2020/05/24
+ */
+
 #include "instruction.h"
 
 #include <map>
@@ -84,6 +91,11 @@ std::map< std::string, std::tuple< uint8_t, uint8_t, uint8_t > > encoding = {
 
 namespace micro1 {
 
+/**
+* @brief Return group number of mnemonic
+* @param[in] op MICRO-1 mnemonic
+* @return InstGroup number of instruction group
+*/
 InstGroup
 getNumberOfGroup(std::string op) {
     for (auto g : group) {
@@ -97,7 +109,11 @@ getNumberOfGroup(std::string op) {
     return InstGroup::INVALID;
 }
 
-
+/**
+* @brief Return instruction encoding
+* @param[in] op MICRO-1 mnemonic
+* @return std::tuple<uint8_t,uint8_t,uint8_t> encoding { op, ra, rb }
+*/
 std::tuple<uint8_t, uint8_t, uint8_t>
 getEncoding(std::string op) {
     try {

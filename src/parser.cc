@@ -18,6 +18,13 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+/**
+ * @file parser.cc
+ * @brief Implementation for parsing tokens
+ * @author Kenta Arai
+ * @date 2020/05/24
+ */
+
 #include "parser.h"
 
 #include "instruction.h"
@@ -170,6 +177,11 @@ expectConstant(TokenIterator head, const TokenIterator tail) {
 
 namespace micro1 {
 
+/**
+* @brief Parse lexical tokens
+* @param[in] tokens tokens which parsed by lexical analyzer
+* @return std::vector<Row> parsed tokens
+*/
 std::vector< Row >
 parse(std::vector< Token > tokens) {
 	::State state = ::State::WAIT_TITLE;

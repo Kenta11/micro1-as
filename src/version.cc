@@ -18,6 +18,13 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+/**
+ * @file version.cc
+ * @brief Implementation for displaying micro1-as version
+ * @author Kenta Arai
+ * @date 2020/05/24
+ */
+
 #include "version.h"
 
 #include <iostream>
@@ -38,6 +45,9 @@ const uint32_t REVISION_VERSION = 0;
 
 namespace micro1 {
 
+/**
+* @brief Print version of micro1-as and C++
+*/
 void
 printVersion() {
     cout << "   *** ";

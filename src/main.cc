@@ -18,6 +18,13 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+/**
+ * @file main.cc
+ * @brief micro1-as program
+ * @author Kenta Arai
+ * @date 2020/05/24
+ */
+
 #include "lexer.h"
 #include "output.h"
 #include "parser.h"
@@ -36,6 +43,12 @@ using std::cerr;
 using std::endl;
 using std::string;
 
+/**
+* @brief get micro1-as mode from command line arguments
+* @param[in] argc argc from main(argc, argv)
+* @param[in] argv argv from main(argc, argv)
+* @return std::string micro1-as's mode
+*/
 string
 getMode(const int argc, const char **argv) {
     if (argc == 1)
@@ -48,6 +61,9 @@ getMode(const int argc, const char **argv) {
         return "command";
 }
 
+/**
+* @brief Print micro1-as usage
+*/
 void
 printUsage() {
     cout << "Usage: micro1-as                (interactive mode)" << endl;
@@ -56,6 +72,11 @@ printUsage() {
     cout << " Or  : micro1-as (-h|--help)    (help mode; print this message)" << endl;
 }
 
+/**
+* @brief Remove extension from file name
+* @param[in] filename a file name
+* @return std::string a file name removed extension
+*/
 string
 removeExtension(const string filename) {
     if (string::size_type pos = filename.find_last_of("."); pos != std::string::npos) {
@@ -66,6 +87,12 @@ removeExtension(const string filename) {
     }
 }
 
+/**
+* @brief Assemble MICRO-1 source program
+* @param[in] filename a file name which source program
+* @param[in] flagWritingListingFile If true, the function writes a listing file. If false, it prints syntax errors.
+* @return bool if true, the source program is correct syntactically
+*/
 bool
 assemble(const string filename, const bool flagWritingListingFile) {
     std::ifstream ifs(filename);
@@ -87,6 +114,12 @@ assemble(const string filename, const bool flagWritingListingFile) {
     return micro1::writeObjectFile(lines, removeExtension(filename) + ".b");
 }
 
+/**
+* @brief main program of micro1-as
+* @param[in] argc counts of arguments
+* @param[in] argv arguments value
+* @return int 0: successfully, 1: file not found, 2: fatal error
+*/
 int
 main(const int argc, const char **argv) {
     auto mode = getMode(argc, argv);

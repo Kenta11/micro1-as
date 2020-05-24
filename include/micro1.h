@@ -18,12 +18,25 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+/**
+ * @file micro1.h
+ * @brief Type definition for MICRO-1
+ * @author Kenta Arai
+ * @date 2020/05/24
+ */
+
 #ifndef MICRO1_H
 #define MICRO1_H
 
 namespace micro1 {
 
+/**
+* @brief MICRO-1 MM address
+*/
 typedef uint16_t M1Addr;
+/**
+* @brief MICRO-1 MM data
+*/
 typedef uint16_t M1Word;
 
 }

@@ -18,6 +18,13 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+/**
+ * @file output.cc
+ * @brief Implementation for outputting the result of parsing
+ * @author Kenta Arai
+ * @date 2020/05/24
+ */
+
 #include "output.h"
 
 #include "micro1.h"
@@ -193,6 +200,11 @@ setRegister(micro1::Row row, std::vector< micro1::M1Addr > addresses, std::map< 
 
 namespace micro1 {
 
+/**
+* @brief Write a listing file
+* @param[in] rows parsed tokens
+* @param[in] filename listing file name
+*/
 void
 writeListingFile(const std::vector< Row > rows, const std::string filename) {
 	std::ofstream ofs(filename);
@@ -297,6 +309,10 @@ writeListingFile(const std::vector< Row > rows, const std::string filename) {
 	}
 }
 
+/**
+* @brief Print syntax errors to standard error output
+* @param[in] rows parsed tokens
+*/
 void
 printSyntaxError(const std::vector< Row > rows) {
 	for (auto row : rows) {
@@ -340,6 +356,12 @@ printSyntaxError(const std::vector< Row > rows) {
 	}
 }
 
+/**
+* @brief Write a object file
+* @param[in] rows parsed tokens
+* @param[in] filename object file name
+* @return bool If true, lines are syntactically correct
+*/
 bool
 writeObjectFile(const std::vector< Row > rows, const std::string filename) {
 	if (std::count_if(rows.begin(), rows.end(), [](auto row) { return row.dinfo().importance() == DebugInfoImportance::ERROR; }) != 0)

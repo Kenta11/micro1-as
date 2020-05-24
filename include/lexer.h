@@ -18,6 +18,13 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+/**
+ * @file lexer.h
+ * @brief Declaration for lexical analyzer for MICRO-1 assembly program
+ * @author Kenta Arai
+ * @date 2020/05/24
+ */
+
 #ifndef LEXER_H
 #define LEXER_H
 
@@ -28,6 +35,11 @@
 
 namespace micro1 {
 
+/**
+* @brief tokenize a source program
+* @param[in] ifs a source program
+* @return std::vector<Token> lexical tokens
+*/
 std::vector< Token > tokenize(std::ifstream& ifs);
 
 }

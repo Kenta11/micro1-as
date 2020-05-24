@@ -18,6 +18,13 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+/**
+ * @file output.h
+ * @brief Declaration for outputting the result of parsing
+ * @author Kenta Arai
+ * @date 2020/05/24
+ */
+
 #ifndef OUTPUT_H
 #define OUTPUT_H
 
@@ -25,9 +32,26 @@
 
 namespace micro1 {
 
-void writeListingFile(const std::vector< Row > lines, const std::string filename);
-void printSyntaxError(const std::vector< Row > lines);
-bool writeObjectFile(const std::vector< Row > lines, const std::string filename);
+/**
+* @brief Write a listing file
+* @param[in] rows parsed tokens
+* @param[in] filename listing file name
+*/
+void writeListingFile(const std::vector< Row > rows, const std::string filename);
+
+/**
+* @brief Print syntax errors to standard error output
+* @param[in] rows parsed tokens
+*/
+void printSyntaxError(const std::vector< Row > rows);
+
+/**
+* @brief Write a object file
+* @param[in] rows parsed tokens
+* @param[in] filename object file name
+* @return bool If true, lines are syntactically correct
+*/
+bool writeObjectFile(const std::vector< Row > rows, const std::string filename);
 
 }
 

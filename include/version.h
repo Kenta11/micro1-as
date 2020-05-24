@@ -18,11 +18,21 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+/**
+ * @file version.h
+ * @brief Declaration for displaying micro1-as version
+ * @author Kenta Arai
+ * @date 2020/05/24
+ */
+
 #ifndef VERSION_H
 #define VERSION_H
 
 namespace micro1 {
 
+/**
+* @brief Print version of micro1-as and C++
+*/
 void printVersion();
 
 }
