@@ -39,7 +39,7 @@
 
 namespace {
 
-using TokenIterator = std::vector< micro1::Token >::iterator;
+using TokenIterator = micro1::Tokens::iterator;
 
 std::tuple< std::vector< micro1::M1Addr >, std::map< std::string, micro1::M1Addr > >
 calculateAddress(const std::vector< micro1::Row > rows) {

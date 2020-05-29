@@ -35,11 +35,11 @@ namespace micro1 {
 /**
 * @brief tokenize a source program
 * @param[in] ifs a source program
-* @return std::vector<Token> lexical tokens
+* @return Tokens lexical tokens
 */
-std::vector< Token >
+Tokens
 tokenize(std::ifstream& ifs) {
-    std::vector< Token > tokens;
+    Tokens tokens;
 
     std::string line;
     for (uint64_t row = 1; std::getline(ifs, line); row++) {

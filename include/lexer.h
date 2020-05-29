@@ -31,16 +31,15 @@
 #include "token.h"
 
 #include <fstream>
-#include <vector>
 
 namespace micro1 {
 
 /**
 * @brief tokenize a source program
 * @param[in] ifs a source program
-* @return std::vector<Token> lexical tokens
+* @return Tokens lexical tokens
 */
-std::vector< Token > tokenize(std::ifstream& ifs);
+Tokens tokenize(std::ifstream& ifs);
 
 }
 

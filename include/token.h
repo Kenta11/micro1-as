@@ -29,6 +29,7 @@
 #define TOKEN_H
 
 #include <string>
+#include <vector>
 
 namespace micro1 {
 
@@ -97,6 +98,11 @@ private:
     uint64_t m_row; //! row number 
     uint64_t m_column; //! column number
 };
+
+/**
+* @brief Vector for token
+*/
+typedef std::vector< Token > Tokens;
 
 }
 

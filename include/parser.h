@@ -31,8 +31,6 @@
 #include "token.h"
 
 #include <cstdint>
-#include <string>
-#include <vector>
 
 namespace micro1 {
 
@@ -113,7 +111,7 @@ public:
     * @param[in] dinfo debug information
     * @param[in] raddr address referenced by the instruction
     */
-    Row(std::string label, std::vector< Token > instruction, DebugInfo dinfo, ReferenceAddress raddr) : m_label(label), m_instruction(instruction), m_dinfo(dinfo), m_raddr(raddr) {}
+    Row(std::string label, Tokens instruction, DebugInfo dinfo, ReferenceAddress raddr) : m_label(label), m_instruction(instruction), m_dinfo(dinfo), m_raddr(raddr) {}
     /**
     * @brief Getter for m_label
     * @return std::string label name in a line
@@ -121,9 +119,9 @@ public:
     std::string label() const { return m_label; }
     /**
     * @brief Getter for m_instruction
-    * @return std::vector<Token> tokens which make up a instruction
+    * @return Tokens tokens which make up a instruction
     */
-    std::vector< Token > instruction() const { return m_instruction; }
+    Tokens instruction() const { return m_instruction; }
     /**
     * @brief Getter for m_dinfo
     * @return DebugInfo debug information
@@ -136,7 +134,7 @@ public:
     ReferenceAddress raddr() const { return m_raddr; }
 private:
     std::string m_label; //! label name in a line
-    std::vector< Token > m_instruction; //! instruction tokens which make up a instruction
+    Tokens m_instruction; //! instruction tokens which make up a instruction
     DebugInfo m_dinfo; //! debug information
     ReferenceAddress m_raddr; //! address referenced by the instruction
 };
@@ -146,8 +144,7 @@ private:
 * @param[in] tokens tokens which parsed by lexical analyzer
 * @return std::vector<Row> parsed tokens
 */
-std::vector< Row >
-parse(const std::vector< Token > tokens);
+std::vector< Row > parse(const Tokens tokens);
 
 }
 

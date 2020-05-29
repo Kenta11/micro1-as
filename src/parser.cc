@@ -34,7 +34,7 @@
 
 namespace {
 
-using TokenIterator = std::vector< micro1::Token >::iterator;
+using TokenIterator = micro1::Tokens::iterator;
 
 enum class State {
 	WAIT_TITLE,
@@ -183,14 +183,14 @@ namespace micro1 {
 * @return std::vector<Row> parsed tokens
 */
 std::vector< Row >
-parse(std::vector< Token > tokens) {
+parse(Tokens tokens) {
 	::State state = ::State::WAIT_TITLE;
 	std::string label;
 	std::string reference;
 	std::int64_t offset;
 	std::vector< Row > ret;
-	std::vector< Token >::iterator iter = tokens.begin();
-	std::vector< Token > instruction;
+	Tokens::iterator iter = tokens.begin();
+	Tokens instruction;
 
 	for (; iter < tokens.end(); iter++) {
 		switch (state) {
