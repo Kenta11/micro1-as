@@ -64,7 +64,7 @@ public:
     * @param[in] row row number
     * @param[in] column column number
     */
-    Token(TokenKind kind, std::string line, std::size_t size, uint64_t row, uint64_t column) : m_kind(kind), m_line(line), m_size(size), m_row(row), m_column(column) {}
+    Token(TokenKind kind, std::string line, size_t size, uint64_t row, uint64_t column) : m_kind(kind), m_line(line), m_size(size), m_row(row), m_column(column) {}
 
     /**
     * @brief Getter for m_kind
@@ -94,7 +94,7 @@ public:
 private:
     TokenKind m_kind; //! token kind
     std::string m_line; //! a line with token
-    std::size_t m_size; //! size of string
+    size_t m_size; //! size of string
     uint64_t m_row; //! row number 
     uint64_t m_column; //! column number
 };

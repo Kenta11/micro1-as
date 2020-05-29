@@ -30,8 +30,6 @@
 
 #include "token.h"
 
-#include <cstdint>
-
 namespace micro1 {
 
 /**
@@ -83,7 +81,7 @@ public:
     * @param[in] label label name of the referenced address
     * @param[in] offset of address
     */
-    ReferenceAddress(std::string label, std::int64_t offset) : m_label(label), m_offset(offset) {}
+    ReferenceAddress(std::string label, int64_t offset) : m_label(label), m_offset(offset) {}
     /**
     * @brief Getter for m_label
     * @return std::string label name
@@ -91,12 +89,12 @@ public:
     std::string label() const { return m_label; }
     /**
     * @brief Getter for m_offset
-    * @return std::int64_t offset of address
+    * @return int64_t offset of address
     */
-    std::int64_t offset() const { return m_offset; }
+    int64_t offset() const { return m_offset; }
 private:
     std::string m_label; //! label name
-    std::int64_t m_offset; // ! offset of address
+    int64_t m_offset; // ! offset of address
 };
 
 /**

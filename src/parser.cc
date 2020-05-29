@@ -187,7 +187,7 @@ parse(Tokens tokens) {
 	::State state = ::State::WAIT_TITLE;
 	std::string label;
 	std::string reference;
-	std::int64_t offset;
+	int64_t offset;
 	Rows ret;
 	Tokens::iterator iter = tokens.begin();
 	Tokens instruction;
@@ -548,7 +548,7 @@ parse(Tokens tokens) {
 				state = ::State::LOAD_INST_EOL;
 				if (iter + 1 < tokens.end()) {
 					if ((*(iter + 1)).kind() == TokenKind::SIGN) {
-						offset = static_cast< std::int64_t >(((*(iter + 1)).str() == "+" ? 1 : -1)) * std::stoi((*(iter + 2)).str());
+						offset = static_cast< int64_t >(((*(iter + 1)).str() == "+" ? 1 : -1)) * std::stoi((*(iter + 2)).str());
 						instruction.emplace_back(*(++iter));
 						instruction.emplace_back(*(++iter));
 					}
@@ -570,7 +570,7 @@ parse(Tokens tokens) {
 				state = ::State::LOAD_INST_EOL;
 				if (iter + 1 < tokens.end()) {
 					if ((*(iter + 1)).kind() == TokenKind::SIGN) {
-						offset = static_cast<std::int64_t>(((*(iter + 1)).str() == "+" ? 1 : -1)) * std::stoi((*(iter + 2)).str());
+						offset = static_cast<int64_t>(((*(iter + 1)).str() == "+" ? 1 : -1)) * std::stoi((*(iter + 2)).str());
 						instruction.emplace_back(*(++iter));
 						instruction.emplace_back(*(++iter));
 					}

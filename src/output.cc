@@ -77,7 +77,7 @@ calculateAddress(const micro1::Rows rows) {
 	return { addresses, labels };
 }
 
-std::uint16_t
+uint16_t
 extractUInt(TokenIterator head) {
 	if ((*head).kind() == micro1::TokenKind::INTEGER)
 		return std::stoi((*head).str());
@@ -90,10 +90,10 @@ extractUInt(TokenIterator head) {
 	if ((*head).str() == "O")
 		base = 8;
 
-	return static_cast< std::uint16_t >(std::stoi((*(head + 2)).str(), nullptr, base) & 0xFFFF);
+	return static_cast< uint16_t >(std::stoi((*(head + 2)).str(), nullptr, base) & 0xFFFF);
 }
 
-std::uint16_t
+uint16_t
 extractSInt(TokenIterator head) {
 	if ((*head).kind() == micro1::TokenKind::SIGN) {
 		if ((*head).str()[0] == '+')
@@ -105,15 +105,15 @@ extractSInt(TokenIterator head) {
 	return extractUInt(head);
 }
 
-std::uint8_t
+uint8_t
 extractAddress(micro1::ReferenceAddress raddr, micro1::M1Addr current_address, std::map< std::string, micro1::M1Addr > labels) {
 	return 0xFF & ((raddr.label() == "*" ? current_address : labels.at(raddr.label())) + raddr.offset());
 }
 
-std::tuple< std::uint8_t, std::uint8_t, std::uint8_t, std::uint8_t >
-setRegister(micro1::Row row, std::vector< micro1::M1Addr > addresses, std::map< std::string, micro1::M1Addr > labels, std::int64_t index) {
+std::tuple< uint8_t, std::uint8_t, std::uint8_t, std::uint8_t >
+setRegister(micro1::Row row, std::vector< micro1::M1Addr > addresses, std::map< std::string, micro1::M1Addr > labels, int64_t index) {
 	auto [op, ra, rb] = micro1::getEncoding(row.instruction().at(0).str());
-	std::uint8_t nd = 0;
+	uint8_t nd = 0;
 
 	switch (micro1::getNumberOfGroup(row.instruction().at(0).str())) {
 	case micro1::InstGroup::GROUP1:
@@ -164,8 +164,8 @@ setRegister(micro1::Row row, std::vector< micro1::M1Addr > addresses, std::map< 
 				word = extractSInt(row.instruction().begin() + 1);
 			}
 			else if (row.instruction().at(1).kind() == micro1::TokenKind::CHARS) {
-				word = static_cast<std::uint16_t>(row.instruction().at(1).str()[1]) << 8;
-				word += static_cast<std::uint16_t>(row.instruction().at(1).str()[2]) & 0xFF;
+				word = static_cast<uint16_t>(row.instruction().at(1).str()[1]) << 8;
+				word += static_cast<uint16_t>(row.instruction().at(1).str()[2]) & 0xFF;
 			}
 			else /* if (row.instruction().at(1).kind() == micro1::TokenKind::STRING) */ {
 				word = labels.at(row.instruction().at(1).str());
@@ -215,8 +215,8 @@ writeListingFile(const Rows rows, const std::string filename) {
 		exit(2);
 	}
 
-	std::int64_t index = 0;
-	std::uint64_t num_of_errors = 0;
+	int64_t index = 0;
+	uint64_t num_of_errors = 0;
 	for (auto row : rows) {
 		if (row.instruction().size() == 0)
 			continue;
@@ -254,9 +254,9 @@ writeListingFile(const Rows rows, const std::string filename) {
 			else {
 				auto [op, ra, rb, nd] = ::setRegister(row, addresses, labels, index);
 				if (row.instruction().at(0).str() == "DC") {
-					ofs << std::hex << std::uppercase << static_cast<std::uint32_t>(op);
-					ofs << std::hex << std::uppercase << static_cast<std::uint32_t>((ra << 2) + rb);
-					ofs << std::hex << std::setw(2) << std::setfill('0') << std::uppercase << static_cast<std::uint32_t>(nd) << "    ";
+					ofs << std::hex << std::uppercase << static_cast<uint32_t>(op);
+					ofs << std::hex << std::uppercase << static_cast<uint32_t>((ra << 2) + rb);
+					ofs << std::hex << std::setw(2) << std::setfill('0') << std::uppercase << static_cast<uint32_t>(nd) << "    ";
 				}
 				else if (row.instruction().at(0).str() == "DS") {
 					ofs << "0000    " << row.instruction().at(0).line() << std::endl;
@@ -383,7 +383,7 @@ writeObjectFile(const Rows rows, const std::string filename) {
 		exit(2);
 	}
 
-	std::int64_t index = 0;
+	int64_t index = 0;
 	for (auto row : rows) {
 		if (row.instruction().size() == 0)
 			continue;
