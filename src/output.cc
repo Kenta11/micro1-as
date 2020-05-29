@@ -42,7 +42,7 @@ namespace {
 using TokenIterator = micro1::Tokens::iterator;
 
 std::tuple< std::vector< micro1::M1Addr >, std::map< std::string, micro1::M1Addr > >
-calculateAddress(const std::vector< micro1::Row > rows) {
+calculateAddress(const micro1::Rows rows) {
 	std::vector< micro1::M1Addr > addresses;
 	std::map< std::string, micro1::M1Addr > labels;
 	micro1::M1Addr addr = 0;
@@ -206,7 +206,7 @@ namespace micro1 {
 * @param[in] filename listing file name
 */
 void
-writeListingFile(const std::vector< Row > rows, const std::string filename) {
+writeListingFile(const Rows rows, const std::string filename) {
 	std::ofstream ofs(filename);
 	auto [addresses, labels] = ::calculateAddress(rows);
 
@@ -314,7 +314,7 @@ writeListingFile(const std::vector< Row > rows, const std::string filename) {
 * @param[in] rows parsed tokens
 */
 void
-printSyntaxError(const std::vector< Row > rows) {
+printSyntaxError(const Rows rows) {
 	for (auto row : rows) {
 		if (row.dinfo().importance() == DebugInfoImportance::ERROR) {
 			auto index = row.dinfo().index();
@@ -363,7 +363,7 @@ printSyntaxError(const std::vector< Row > rows) {
 * @return bool If true, lines are syntactically correct
 */
 bool
-writeObjectFile(const std::vector< Row > rows, const std::string filename) {
+writeObjectFile(const Rows rows, const std::string filename) {
 	if (std::count_if(rows.begin(), rows.end(), [](auto row) { return row.dinfo().importance() == DebugInfoImportance::ERROR; }) != 0)
 		return false;
 

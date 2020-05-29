@@ -182,13 +182,13 @@ namespace micro1 {
 * @param[in] tokens tokens which parsed by lexical analyzer
 * @return std::vector<Row> parsed tokens
 */
-std::vector< Row >
+Rows
 parse(Tokens tokens) {
 	::State state = ::State::WAIT_TITLE;
 	std::string label;
 	std::string reference;
 	std::int64_t offset;
-	std::vector< Row > ret;
+	Rows ret;
 	Tokens::iterator iter = tokens.begin();
 	Tokens instruction;
 

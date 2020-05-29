@@ -140,11 +140,16 @@ private:
 };
 
 /**
+* @brief Vector for row
+*/
+typedef std::vector< Row > Rows;
+
+/**
 * @brief Parse lexical tokens
 * @param[in] tokens tokens which parsed by lexical analyzer
 * @return std::vector<Row> parsed tokens
 */
-std::vector< Row > parse(const Tokens tokens);
+Rows parse(const Tokens tokens);
 
 }
 

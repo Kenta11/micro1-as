@@ -37,13 +37,13 @@ namespace micro1 {
 * @param[in] rows parsed tokens
 * @param[in] filename listing file name
 */
-void writeListingFile(const std::vector< Row > rows, const std::string filename);
+void writeListingFile(const Rows rows, const std::string filename);
 
 /**
 * @brief Print syntax errors to standard error output
 * @param[in] rows parsed tokens
 */
-void printSyntaxError(const std::vector< Row > rows);
+void printSyntaxError(const Rows rows);
 
 /**
 * @brief Write a object file
@@ -51,7 +51,7 @@ void printSyntaxError(const std::vector< Row > rows);
 * @param[in] filename object file name
 * @return bool If true, lines are syntactically correct
 */
-bool writeObjectFile(const std::vector< Row > rows, const std::string filename);
+bool writeObjectFile(const Rows rows, const std::string filename);
 
 }
 
