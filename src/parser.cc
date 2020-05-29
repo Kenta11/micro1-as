@@ -76,22 +76,22 @@ skipToEOL(TokenIterator& iter, const TokenIterator end) {
 
 bool
 isDecimal(std::string str) {
-	return std::count_if(str.begin(), str.end(), [](unsigned char c) { return std::isdigit(c); }) == str.length();
+	return std::count_if(str.begin(), str.end(), [](unsigned char c) { return std::isdigit(c); }) == static_cast<int>(str.length());
 }
 
 bool
 isHexadecimal(std::string str) {
-	return std::count_if(str.begin(), str.end(), [](unsigned char c) { return std::isxdigit(c); }) == str.length();
+	return std::count_if(str.begin(), str.end(), [](unsigned char c) { return std::isxdigit(c); }) == static_cast<int>(str.length());
 }
 
 bool
 isOctal(std::string str) {
-	return std::count_if(str.begin(), str.end(), [](unsigned char c) { return '0' <= c && c < '8'; }) == str.length();
+	return std::count_if(str.begin(), str.end(), [](unsigned char c) { return '0' <= c && c < '8'; }) == static_cast<int>(str.length());
 }
 
 bool
 isBinary(std::string str) {
-	return std::count_if(str.begin(), str.end(), [](unsigned char c) { return c == '0' || c == '1'; }) == str.length();
+	return std::count_if(str.begin(), str.end(), [](unsigned char c) { return c == '0' || c == '1'; }) == static_cast<int>(str.length());
 }
 
 bool

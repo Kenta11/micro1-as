@@ -330,17 +330,17 @@ printSyntaxError(const Rows rows) {
 			std::cerr << row.instruction().at(0).line() << std::endl;
 
 			// print marks like "       ^^^^^"
-			for (auto i = 0; i < number_of_column; i++) {
+			for (size_t i = 0; i < number_of_column; i++) {
 				std::cerr << " ";
 			}
-			for (auto i = 0; i < row.instruction().at(index).str().size(); i++) {
+			for (size_t i = 0; i < row.instruction().at(index).str().size(); i++) {
 				std::cerr << "^";
 			}
 			std::cerr << std::endl;
 		}
 	}
 
-	auto [addresses, labels] = ::calculateAddress(rows);
+	auto labels = std::get<1>(::calculateAddress(rows));
 	
 	for (auto row : rows) {
 		if (row.raddr().label() == "")
