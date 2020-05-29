@@ -26,3 +26,8 @@ include_directories(include)
 file(GLOB source_code src/*.cc)
 
 add_executable(micro1-as ${source_code})
+
+include_directories(third_party/googletest/googletest/include)
+add_subdirectory(third_party/googletest/googletest)
+add_executable(test_instruction test/test_instruction.cc src/instruction.cc)
+target_link_libraries(test_instruction gtest gtest_main)
