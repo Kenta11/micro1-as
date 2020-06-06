@@ -25,7 +25,7 @@
  * @date 2020/05/30
  */
 
-#include "parser.h"
+#include "micro1-as/parser.h"
 
 #include <gtest/gtest.h>
 

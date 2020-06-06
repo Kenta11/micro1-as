@@ -25,7 +25,7 @@
  * @date 2020/05/24
  */
 
-#include "instruction.h"
+#include "micro1-as/instruction.h"
 
 #include <map>
 #include <stdexcept>

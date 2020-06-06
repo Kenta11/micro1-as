@@ -25,9 +25,9 @@
  * @date 2020/05/24
  */
 
-#include "parser.h"
+#include "micro1-as/parser.h"
 
-#include "instruction.h"
+#include "micro1-as/instruction.h"
 
 #include <algorithm>
 #include <iostream>

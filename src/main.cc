@@ -25,10 +25,10 @@
  * @date 2020/05/24
  */
 
-#include "lexer.h"
-#include "output.h"
-#include "parser.h"
-#include "version.h"
+#include "micro1-as/lexer.h"
+#include "micro1-as/output.h"
+#include "micro1-as/parser.h"
+#include "micro1-as/version.h"
 
 #include <cctype>
 #include <fstream>

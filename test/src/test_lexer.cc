@@ -25,7 +25,7 @@
  * @date 2020/05/30
  */
 
-#include "lexer.h"
+#include "micro1-as/lexer.h"
 
 #include <gtest/gtest.h>
 

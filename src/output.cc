@@ -25,10 +25,10 @@
  * @date 2020/05/24
  */
 
-#include "output.h"
+#include "micro1-as/output.h"
 
-#include "micro1.h"
-#include "instruction.h"
+#include "micro1-as/micro1.h"
+#include "micro1-as/instruction.h"
 
 #include <algorithm>
 #include <iomanip>

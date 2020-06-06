@@ -25,7 +25,7 @@
  * @date 2020/05/24
  */
 
-#include "version.h"
+#include "micro1-as/version.h"
 
 #include <iostream>
 
