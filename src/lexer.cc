@@ -75,10 +75,13 @@ tokenize(std::ifstream& ifs) {
                     tokens.emplace_back(Token(TokenKind::COLON,  line, 1, row, pos));
                     break;
                 case '\'':
-                    if (pos + 2 < line.length())
+                    if (pos + 2 < line.length()) {
                         tokens.emplace_back(Token(TokenKind::CHARS, line, 3, row, pos));
-                    else
+                        pos += 2;
+                    }
+                    else {
                         tokens.emplace_back(Token(TokenKind::INVALID, line, 1, row, pos));
+                    }
                     break;
                 case '"':
                     tokens.emplace_back(Token(TokenKind::DQUOTE, line, 1, row, pos));

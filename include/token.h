@@ -91,6 +91,28 @@ public:
     * @return std::string a token string
     */
     std::string str() const { return m_line.substr(m_column, m_size); }
+    /**
+     * @brief Operator '==' for Token
+     * @return Result of comparing two tokens
+     */
+    bool operator==(Token t) const {
+        return m_kind == t.kind() &&
+               m_line == t.line() &&
+               m_row  == t.row()  &&
+               m_column == t.column() &&
+               str() == t.str();
+    }
+    /**
+     * @brief Operator '!=' for Token
+     * @return Result of comparing two tokens
+     */
+    bool operator!=(Token t) const {
+        return m_kind != t.kind() ||
+               m_line != t.line() ||
+               m_row  != t.row()  ||
+               m_column != t.column() ||
+               str() != t.str();
+    }
 private:
     TokenKind m_kind; //! token kind
     std::string m_line; //! a line with token
