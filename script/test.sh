@@ -3,5 +3,6 @@
 rm -rf build; mkdir build
 cd build
 
-cmake ..
+cmake -DBUILD_UNIT_TESTS=ON ..
 make -j`nproc`
+ctest
