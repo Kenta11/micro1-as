@@ -1,0 +1,15 @@
+TITLE InputForParserGROUP4
+    LEA 0,87 (3) 
+    LX  1, +124 (0)
+    STX 2, -93 (1)
+    LEA 3, X"39 (2)
+    LX  0, +X"C23 (3)
+    STX 1, -X"23D (0)
+    LEA 2, O"3723 (1)
+    LX  3, +O"3243 (2)
+    STX 0, -O"42 (3)
+    LEA 1, B"10101101 (0)
+    LX  2, +B"11010 (1)
+    STX 3, -B"10010111 (2)
+    LEA 0, (3)
+END

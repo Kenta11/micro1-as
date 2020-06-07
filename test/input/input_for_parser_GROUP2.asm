@@ -1,0 +1,6 @@
+TITLE InputForParserGROUP2
+    LC   0, 108
+    PUSH 1, X"E0B3
+    POP  2, O"173210
+    LC   3, B"1001010101101001
+END

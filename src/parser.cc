@@ -229,7 +229,7 @@ parse(Tokens tokens) {
 			state = ::State::LOAD_LABEL;
 
 			if ((*iter).kind() == TokenKind::EOL) {
-				ret.emplace_back(Row("", instruction, DebugInfo(DebugInfoImportance::INFO, "", instruction.size() - 1), ReferenceAddress("", 0)));
+				ret.emplace_back(Row("", instruction, DebugInfo(DebugInfoImportance::INFO, "", 0), ReferenceAddress("", 0)));
 				instruction.clear();
 			}
 			else {
@@ -439,7 +439,7 @@ parse(Tokens tokens) {
 
 			if (::expectUInt(iter, tokens.end())) {
 				state = ::State::LOAD_INST_EOL;
-				if (::expectPrefix(iter + 1, tokens.end())) {
+				if (::expectPrefix(iter, tokens.end())) {
 					instruction.emplace_back(*(++iter));
 					instruction.emplace_back(*(++iter));
 				}

@@ -65,6 +65,24 @@ public:
     * @brief Getter for m_index
     */
     uint64_t index() const { return m_index; }
+    /**
+     * @brief Operator '==' for DebugInfo
+     * @return Result of comparing two DebugInfo objects
+     */
+    bool operator==(DebugInfo d) const {
+        return m_importance == d.importance() &&
+               m_message == d.message() &&
+               m_index == d.index();
+    }
+    /**
+     * @brief Operator '!=' for DebugInfo
+     * @return Result of comparing two DebugInfo objects
+     */
+    bool operator!=(DebugInfo d) const {
+        return m_importance != d.importance() ||
+               m_message != d.message() ||
+               m_index != d.index();
+    }
 private:
     DebugInfoImportance m_importance; //! importance of debug information
     std::string m_message; //! error message
@@ -92,6 +110,22 @@ public:
     * @return int64_t offset of address
     */
     int64_t offset() const { return m_offset; }
+    /**
+     * @brief Operator '==' for ReferenceAddress
+     * @return Result of comparing two ReferenceAddress objects
+     */
+    bool operator==(ReferenceAddress a) const {
+        return m_label == a.label() &&
+               m_offset == a.offset();
+    }
+    /**
+     * @brief Operator '!=' for ReferenceAddress
+     * @return Result of comparing two ReferenceAddress objects
+     */
+    bool operator!=(ReferenceAddress a) const {
+        return m_label != a.label() ||
+               m_offset != a.offset();
+    }
 private:
     std::string m_label; //! label name
     int64_t m_offset; // ! offset of address
@@ -130,6 +164,26 @@ public:
     * @return ReferencedAddress address referenced by the instruction
     */
     ReferenceAddress raddr() const { return m_raddr; }
+    /**
+     * @brief Operator '==' for Row
+     * @return Result of comparing two rows
+     */
+    bool operator==(Row r) const {
+        return m_label == r.label() &&
+               m_instruction == r.instruction() &&
+               m_dinfo  == r.dinfo() &&
+               m_raddr == r.raddr();
+    }
+    /**
+     * @brief Operator '!=' for Row
+     * @return Result of comparing two rows
+     */
+    bool operator!=(Row r) const {
+        return m_label != r.label() ||
+               m_instruction != r.instruction() ||
+               m_dinfo  != r.dinfo() ||
+               m_raddr != r.raddr();
+    }
 private:
     std::string m_label; //! label name in a line
     Tokens m_instruction; //! instruction tokens which make up a instruction
