@@ -8,7 +8,6 @@ This project is a MICRO-1 assembler written in C++17. It uses only C++17 standar
 $ git pull --recursive https:://github.com/Kenta11/micro1-as
 $ cd micro1-as
 $ source ./script/build.sh
-
 ```
 
 After compiling, you can find out `micro1-as` program under `bin/`.
