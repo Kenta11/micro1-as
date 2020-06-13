@@ -33,37 +33,6 @@
 
 namespace {
 
-    template<typename T>
-    void compare(T expected, T result) {
-        for (size_t i = 0; i < expected.size() || i < result.size(); i++) {
-            if (expected.at(i) == result.at(i))
-                continue;
-
-            std::cout << i << ": " << std::endl;
-            if (expected.at(i).label() != result.at(i).label()) {
-                std::cout << "  - label: " << expected.at(i).label() << " " << result.at(i).label() << std::endl;
-            }
-            if (expected.at(i).instruction() != result.at(i).instruction()) {
-                std::cout << "  - instruction: " << expected.at(i).instruction().size() << " " << result.at(i).instruction().size() << std::endl;
-                for (size_t j = 0; j < expected.at(i).instruction().size() || j < result.at(i).instruction().size(); j++) {
-                    if (expected.at(i).instruction().at(j) != result.at(i).instruction().at(j)) {
-                        std::cout << "    " << expected.at(i).instruction().at(j).str() << " " << result.at(i).instruction().at(j).str() << std::endl;
-                        std::cout << "====================================================" << std::endl;
-                    }
-                }
-            }
-            if (expected.at(i).dinfo() != result.at(i).dinfo()) {
-                std::cout << "  - dinfo: " << expected.at(i).dinfo().message() << " " << result.at(i).dinfo().message() << std::endl;
-                std::cout << "           " << expected.at(i).dinfo().index() << " " << result.at(i).dinfo().index() << std::endl;
-            }
-            if (expected.at(i).raddr() != result.at(i).raddr()) {
-                std::cout << "  - raddr: " << expected.at(i).raddr().label() << " " << result.at(i).raddr().label() << std::endl;
-                std::cout << "           " << expected.at(i).raddr().offset() << " " << result.at(i).raddr().offset() << std::endl;
-            }
-        }
-
-    }
-
     TEST(parseTest, GROUP1) {
         std::ifstream ifs("test/input/input_for_parser_GROUP1.asm");
         ASSERT_FALSE(ifs.fail());
@@ -1100,8 +1069,6 @@ namespace {
             )
         };
         auto result = micro1::parse(micro1::tokenize(ifs));
-
-        ::compare(expected, result);
 
         ASSERT_EQ(expected, result);
     }
