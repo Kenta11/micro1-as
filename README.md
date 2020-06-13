@@ -20,8 +20,8 @@ After compiling, you can find out `micro1-as` program under `bin/`.
 
 ### Linux (Ubuntu / ManjaroLinux)
 
-- CMake
-- g++
+- CMake (3.10 >=)
+- g++ (which supports C++17)
 
 ## Tests
 
