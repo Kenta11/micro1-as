@@ -32,7 +32,7 @@
 namespace {
 
     TEST(tokenizeTest, STRING) {
-        std::ifstream ifs("test/input/input_for_lexer_STRING.txt");
+        std::ifstream ifs("test/unittest/input/input_for_lexer_STRING.in");
         ASSERT_FALSE(ifs.fail());
 
         micro1::Tokens expected = {
@@ -55,7 +55,7 @@ namespace {
     }
 
     TEST(tokenizeTest, INTEGER) {
-        std::ifstream ifs("test/input/input_for_lexer_INTEGER.txt");
+        std::ifstream ifs("test/unittest/input/input_for_lexer_INTEGER.in");
         ASSERT_FALSE(ifs.fail());
 
         micro1::Tokens expected = {
@@ -78,7 +78,7 @@ namespace {
 
 
     TEST(tokenizeTest, LPAREN) {
-        std::ifstream ifs("test/input/input_for_lexer_LPAREN.txt");
+        std::ifstream ifs("test/unittest/input/input_for_lexer_LPAREN.in");
         ASSERT_FALSE(ifs.fail());
 
         micro1::Tokens expected = {
@@ -97,7 +97,7 @@ namespace {
     }
 
     TEST(tokenizeTest, RPAREN) {
-        std::ifstream ifs("test/input/input_for_lexer_RPAREN.txt");
+        std::ifstream ifs("test/unittest/input/input_for_lexer_RPAREN.in");
         ASSERT_FALSE(ifs.fail());
 
         micro1::Tokens expected = {
@@ -121,7 +121,7 @@ namespace {
     }
 
     TEST(tokenizeTest, STAR) {
-        std::ifstream ifs("test/input/input_for_lexer_STAR.txt");
+        std::ifstream ifs("test/unittest/input/input_for_lexer_STAR.in");
         ASSERT_FALSE(ifs.fail());
 
         micro1::Tokens expected = {
@@ -149,7 +149,7 @@ namespace {
     }
 
     TEST(tokenizeTest, CHARS) {
-        std::ifstream ifs("test/input/input_for_lexer_CHARS.txt");
+        std::ifstream ifs("test/unittest/input/input_for_lexer_CHARS.in");
         ASSERT_FALSE(ifs.fail());
 
         micro1::Tokens expected = {
@@ -172,7 +172,7 @@ namespace {
     }
 
     TEST(tokenizeTest, DQUOTE) {
-        std::ifstream ifs("test/input/input_for_lexer_DQUOTE.txt");
+        std::ifstream ifs("test/unittest/input/input_for_lexer_DQUOTE.in");
         ASSERT_FALSE(ifs.fail());
 
         micro1::Tokens expected = {
@@ -195,7 +195,7 @@ namespace {
     }
 
     TEST(tokenizeTest, SIGN) {
-        std::ifstream ifs("test/input/input_for_lexer_SIGN.txt");
+        std::ifstream ifs("test/unittest/input/input_for_lexer_SIGN.in");
         ASSERT_FALSE(ifs.fail());
 
         micro1::Tokens expected = {
@@ -219,7 +219,7 @@ namespace {
     }
 
     TEST(tokenizeTest, COMMA) {
-        std::ifstream ifs("test/input/input_for_lexer_COMMA.txt");
+        std::ifstream ifs("test/unittest/input/input_for_lexer_COMMA.in");
         ASSERT_FALSE(ifs.fail());
 
         micro1::Tokens expected = {
@@ -242,7 +242,7 @@ namespace {
     }
 
     TEST(tokenizeTest, COLON) {
-        std::ifstream ifs("test/input/input_for_lexer_COLON.txt");
+        std::ifstream ifs("test/unittest/input/input_for_lexer_COLON.in");
         ASSERT_FALSE(ifs.fail());
 
         micro1::Tokens expected = {
@@ -265,7 +265,7 @@ namespace {
     }
 
     TEST(tokenizeTest, INVALID) {
-        std::ifstream ifs("test/input/input_for_lexer_INVALID.txt");
+        std::ifstream ifs("test/unittest/input/input_for_lexer_INVALID.in");
         ASSERT_FALSE(ifs.fail());
 
         micro1::Tokens expected = {

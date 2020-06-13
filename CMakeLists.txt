@@ -61,21 +61,21 @@ add_executable(micro1-as ${source_code})
 if(BUILD_UNIT_TESTS)
     enable_testing()
 
-    file(GLOB input_files_for_test test/input/*)
-    file(COPY ${input_files_for_test} DESTINATION ${CMAKE_BINARY_DIR}/test/input)
+    file(GLOB input_files_for_test test/unittest/input/*)
+    file(COPY ${input_files_for_test} DESTINATION ${CMAKE_BINARY_DIR}/test/unittest/input)
 
     include_directories(third_party/googletest/googletest/include)
     add_subdirectory(third_party/googletest/googletest)
 
-    add_executable(test_instruction test/src/test_instruction.cc src/instruction.cc)
+    add_executable(test_instruction test/unittest/src/test_instruction.cc src/instruction.cc)
     target_link_libraries(test_instruction gtest gtest_main)
     add_test(NAME test_instruction COMMAND ./bin/test_instruction)
 
-    add_executable(test_lexer test/src/test_lexer.cc src/lexer.cc)
+    add_executable(test_lexer test/unittest/src/test_lexer.cc src/lexer.cc)
     target_link_libraries(test_lexer gtest gtest_main)
     add_test(NAME test_lexer COMMAND ./bin/test_lexer)
 
-    add_executable(test_parser test/src/test_parser.cc src/parser.cc src/lexer.cc src/instruction.cc)
+    add_executable(test_parser test/unittest/src/test_parser.cc src/parser.cc src/lexer.cc src/instruction.cc)
     target_link_libraries(test_parser gtest gtest_main)
     add_test(NAME test_parser COMMAND ./bin/test_parser)
 endif()

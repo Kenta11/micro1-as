@@ -34,7 +34,7 @@
 namespace {
 
     TEST(parseTest, GROUP1) {
-        std::ifstream ifs("test/input/input_for_parser_GROUP1.asm");
+        std::ifstream ifs("test/unittest/input/input_for_parser_GROUP1.asm");
         ASSERT_FALSE(ifs.fail());
 
         micro1::Rows expected = {
@@ -187,7 +187,7 @@ namespace {
     }
 
     TEST(parseTest, GROUP2) {
-        std::ifstream ifs("test/input/input_for_parser_GROUP2.asm");
+        std::ifstream ifs("test/unittest/input/input_for_parser_GROUP2.asm");
         ASSERT_FALSE(ifs.fail());
 
         micro1::Rows expected = {
@@ -265,7 +265,7 @@ namespace {
     }
 
     TEST(parseTest, GROUP3) {
-        std::ifstream ifs("test/input/input_for_parser_GROUP3.asm");
+        std::ifstream ifs("test/unittest/input/input_for_parser_GROUP3.asm");
         ASSERT_FALSE(ifs.fail());
 
         micro1::Rows expected = {
@@ -451,7 +451,7 @@ namespace {
     }
 
     TEST(parseTest, GROUP4) {
-        std::ifstream ifs("test/input/input_for_parser_GROUP4.asm");
+        std::ifstream ifs("test/unittest/input/input_for_parser_GROUP4.asm");
         ASSERT_FALSE(ifs.fail());
 
         micro1::Rows expected = {
@@ -686,7 +686,7 @@ namespace {
     }
 
     TEST(parseTest, GROUP5) {
-        std::ifstream ifs("test/input/input_for_parser_GROUP5.asm");
+        std::ifstream ifs("test/unittest/input/input_for_parser_GROUP5.asm");
         ASSERT_FALSE(ifs.fail());
 
         micro1::Rows expected = {
@@ -797,7 +797,7 @@ namespace {
     }
 
     TEST(parseTest, GROUP6) {
-        std::ifstream ifs("test/input/input_for_parser_GROUP6.asm");
+        std::ifstream ifs("test/unittest/input/input_for_parser_GROUP6.asm");
         ASSERT_FALSE(ifs.fail());
 
         micro1::Rows expected = {
@@ -958,7 +958,7 @@ namespace {
     }
 
     TEST(parseTest, GROUP7) {
-        std::ifstream ifs("test/input/input_for_parser_GROUP7.asm");
+        std::ifstream ifs("test/unittest/input/input_for_parser_GROUP7.asm");
         ASSERT_FALSE(ifs.fail());
 
         micro1::Rows expected = {
@@ -1022,7 +1022,7 @@ namespace {
     }
 
     TEST(parseTest, GROUP8) {
-        std::ifstream ifs("test/input/input_for_parser_GROUP8.asm");
+        std::ifstream ifs("test/unittest/input/input_for_parser_GROUP8.asm");
         ASSERT_FALSE(ifs.fail());
 
         micro1::Rows expected = {
