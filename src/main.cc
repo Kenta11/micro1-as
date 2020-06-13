@@ -26,7 +26,7 @@
  */
 
 #include "micro1-as/lexer.h"
-#include "micro1-as/output.h"
+#include "micro1-as/backend.h"
 #include "micro1-as/parser.h"
 #include "micro1-as/version.h"
 

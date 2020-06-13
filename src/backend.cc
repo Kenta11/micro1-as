@@ -19,13 +19,13 @@
 // DEALINGS IN THE SOFTWARE.
 
 /**
- * @file output.cc
+ * @file backend.cc
  * @brief Implementation for outputting the result of parsing
  * @author Kenta Arai
  * @date 2020/05/24
  */
 
-#include "micro1-as/output.h"
+#include "micro1-as/backend.h"
 
 #include "micro1-as/micro1.h"
 #include "micro1-as/instruction.h"

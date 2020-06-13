@@ -19,14 +19,14 @@
 // DEALINGS IN THE SOFTWARE.
 
 /**
- * @file output.h
+ * @file backend.h
  * @brief Declaration for outputting the result of parsing
  * @author Kenta Arai
  * @date 2020/05/24
  */
 
-#ifndef OUTPUT_H
-#define OUTPUT_H
+#ifndef BACKEND_H
+#define BACKEND_H
 
 #include "parser.h"
 
@@ -55,4 +55,4 @@ bool writeObjectFile(const Rows rows, const std::string filename);
 
 }
 
-#endif // OUTPUT_H
+#endif // BACKEND_H
