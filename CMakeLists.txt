@@ -61,8 +61,8 @@ add_executable(micro1-as ${source_code})
 if(BUILD_UNIT_TESTS)
     enable_testing()
 
-    file(GLOB input_files_for_test test/unittest/input/*)
-    file(COPY ${input_files_for_test} DESTINATION ${CMAKE_BINARY_DIR}/test/unittest/input)
+    file(GLOB input_files_for_unittest test/unittest/input/*)
+    file(COPY ${input_files_for_unittest} DESTINATION ${CMAKE_BINARY_DIR}/test/unittest/input)
 
     include_directories(third_party/googletest/googletest/include)
     add_subdirectory(third_party/googletest/googletest)
@@ -79,3 +79,9 @@ if(BUILD_UNIT_TESTS)
     target_link_libraries(test_parser gtest gtest_main)
     add_test(NAME test_parser COMMAND ./bin/test_parser)
 endif()
+
+file(GLOB input_files_for_systemtest test/systemtest/input/*)
+file(COPY ${input_files_for_systemtest} DESTINATION ${CMAKE_BINARY_DIR}/test/systemtest/input)
+
+file(GLOB expect_files_for_systemtest test/systemtest/expect/*)
+file(COPY ${expect_files_for_systemtest} DESTINATION ${CMAKE_BINARY_DIR}/test/systemtest/expect)

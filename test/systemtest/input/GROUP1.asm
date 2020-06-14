@@ -1,0 +1,11 @@
+TITLE InputForParserGROUP1
+    ADD  1, 37 (0)
+    SUB  2, X"B3DF (1)
+    AND  3, O"314232 (2)
+    OR   0, B"1010010110100101 (3)
+    XOR  1, 43
+    MULT 2, X"B2F2
+    DIV  3, O"172712
+    CMP  0, B"1011010011001101
+    EX   1, (0)
+END
