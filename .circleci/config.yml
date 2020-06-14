@@ -5,7 +5,7 @@ jobs:
       - image: ubuntu:18.04
     steps:
       - checkout
-      - run: apt update -y; apt dist-upgrade -y; apt install g++ cmake -y
+      - run: apt update -y; apt dist-upgrade -y; apt install git g++ cmake -y
       - run:
           name: Building
           command: source ./script/build.sh
@@ -14,16 +14,16 @@ jobs:
       - image: ubuntu:18.04
     steps:
       - checkout
-      - run: apt update -y; apt dist-upgrade -y; apt install g++ cmake -y
+      - run: apt update -y; apt dist-upgrade -y; apt install git g++ cmake -y
       - run:
           name: Running unit tests
-          command: source ./script/unittest.sh
+          command: git submodule update --init --recursive; source ./script/unittest.sh
   systemtest:
     docker:
       - image: ubuntu:18.04
     steps:
       - checkout
-      - run: apt update -y; apt dist-upgrade -y; apt install g++ cmake -y
+      - run: apt update -y; apt dist-upgrade -y; apt install git g++ cmake -y
       - run:
           name: Running system tests
           command: source ./script/build.sh; source ./script/systemtest.sh
