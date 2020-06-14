@@ -1,9 +1,7 @@
 language: cpp
 
-compiler: gcc
-
-install:
-  - git submodule update --init --recursive
+compiler: g++
 
 script:
-  - source ./script/unittest.sh; source ./script/systemtest.sh
+  - source ./script/unittest.sh
+  - source ./script/systemtest.sh
