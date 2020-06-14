@@ -9,7 +9,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - uses: clone gtest
+    - name: clone gtest
       run: git submodule update --init --recursive
     - name: unit tests
       run: source ./script/unittest.sh
