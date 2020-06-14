@@ -3,9 +3,13 @@
 # run `source ./script/systemtest.sh` on root directory
 
 function test_micro1_as () {
+    doller1_dirname=$(dirname $1)
+    expected_dirname=$(dirname ${doller1_dirname})
+    input_filename=$(basename $1)
+
     echo "====================================================================="
     echo "input: $1"
-    echo "expected: $(dirname $(dirname $1))/expect/${$(basename $1)%.asm}.b"
+    echo "expected: ${expected_dirname}/expect/${input_filename%.asm}.b"
     echo "result: ${1%.asm}.b"
 
     ./bin/micro1-as $1
@@ -14,7 +18,7 @@ function test_micro1_as () {
         return 1
     fi
 
-    diff $(dirname $(dirname $1))/expect/${$(basename $1)%.asm}.b ${1%.asm}.b --ignore-space-change
+    diff ${expected_dirname}/expect/${input_filename%.asm}.b ${1%.asm}.b --ignore-space-change
     if [ $? != 0 ]; then
         echo "Test failed"
         return 1
