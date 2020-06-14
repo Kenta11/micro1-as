@@ -5,6 +5,7 @@ jobs:
       - image: ubuntu:18.04
     steps:
       - checkout
+      - run: sudo apt install g++ cmake -y
       - run:
           name: Building
           command: source ./script/build.sh
@@ -13,6 +14,7 @@ jobs:
       - image: ubuntu:18.04
     steps:
       - checkout
+      - run: sudo apt install g++ cmake -y
       - run:
           name: Running unit tests
           command: source ./script/unittest.sh
@@ -21,6 +23,7 @@ jobs:
       - image: ubuntu:18.04
     steps:
       - checkout
+      - run: sudo apt install g++ cmake -y
       - run:
           name: Running system tests
           command: source ./script/build.sh; source ./script/systemtest.sh
