@@ -40,6 +40,15 @@ $ cmake -DBUILD_UNIT_TESTS=ON ..
 $ make -j`nproc`; ctest
 ```
 
+### System tests
+
+If you want to system-test, run `source ./script/build.sh; source ./script/systemtest.sh`.
+
+```
+$ source ./script/build.sh
+$ source ./script/systemtest.sh
+```
+
 ## License
 
 Files are released under the [MIT license](LICENSE). However, the license is not applied to third-party libraries.
