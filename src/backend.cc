@@ -93,13 +93,13 @@ extractUInt(TokenIterator head) {
 	return static_cast< uint16_t >(std::stoi((*(head + 2)).str(), nullptr, base) & 0xFFFF);
 }
 
-uint16_t
+int16_t
 extractSInt(TokenIterator head) {
 	if ((*head).kind() == micro1::TokenKind::SIGN) {
 		if ((*head).str()[0] == '+')
-			return extractSInt(head + 1);
+			return extractUInt(head + 1);
 		else
-			return 256 - extractSInt(head + 1);
+			return 0x10000 - extractUInt(head + 1);
 	}
 
 	return extractUInt(head);
@@ -107,7 +107,7 @@ extractSInt(TokenIterator head) {
 
 uint8_t
 extractAddress(micro1::ReferenceAddress raddr, micro1::M1Addr current_address, std::map< std::string, micro1::M1Addr > labels) {
-	return 0xFF & ((raddr.label() == "*" ? current_address : labels.at(raddr.label())) + raddr.offset());
+	return 0xFF & ((raddr.label() == "*" ? 0 : labels.at(raddr.label()) - current_address) + raddr.offset());
 }
 
 std::tuple< uint8_t, std::uint8_t, std::uint8_t, std::uint8_t >
@@ -148,7 +148,7 @@ setRegister(micro1::Row row, std::vector< micro1::M1Addr > addresses, std::map< 
 		if (row.instruction().at(1).kind() == micro1::TokenKind::STRING) {
 			if (row.instruction().at(1).str() == "CR")
 				nd = 0;
-			else if (row.instruction().at(1).str() == "CR")
+			else if (row.instruction().at(1).str() == "LPT")
 				nd = 1;
 		}
 		else if (row.instruction().at(1).kind() == micro1::TokenKind::INTEGER) {
@@ -159,23 +159,24 @@ setRegister(micro1::Row row, std::vector< micro1::M1Addr > addresses, std::map< 
 		break;
 	case micro1::InstGroup::GROUP9: {
 		micro1::M1Word word;
+
 		if (row.instruction().at(0).str() == "DC") {
 			if (row.instruction().size() > 2 || row.instruction().at(1).kind() == micro1::TokenKind::INTEGER) {
 				word = extractSInt(row.instruction().begin() + 1);
 			}
 			else if (row.instruction().at(1).kind() == micro1::TokenKind::CHARS) {
-				word = static_cast<uint16_t>(row.instruction().at(1).str()[1]) << 8;
-				word += static_cast<uint16_t>(row.instruction().at(1).str()[2]) & 0xFF;
+				word = static_cast<micro1::M1Word>(row.instruction().at(1).str()[1]) << 8;
+				word += static_cast<micro1::M1Word>(row.instruction().at(1).str()[2]) & 0xFF;
 			}
 			else /* if (row.instruction().at(1).kind() == micro1::TokenKind::STRING) */ {
 				word = labels.at(row.instruction().at(1).str());
 			}
 		}
 		else if (row.instruction().at(0).str() == "DS") {
-			word = std::stoi(row.instruction().at(1).str());
+			word = static_cast<micro1::M1Word>(std::stoi(row.instruction().at(1).str()));
 		}
 		else /* if (row.instruction().at(0).str() == "ORG") */ {
-			word = std::stoi(row.instruction().at(1).str(), nullptr, 16);
+			word = static_cast<micro1::M1Word>(std::stoi(row.instruction().at(1).str(), nullptr, 16));
 		}
 
 		op = word >> 12;
@@ -226,7 +227,7 @@ writeListingFile(const Rows rows, const std::string filename) {
 			ofs << "F ";
 			num_of_errors++;
 		}
-		else if (row.raddr().label() != "" && labels.find(row.raddr().label()) == labels.end()) {
+		else if ((row.raddr().label() != "" && labels.find(row.raddr().label()) == labels.end()) && row.raddr().label() != "*") {
 			ofs << "F ";
 			num_of_errors++;
 		}
@@ -343,7 +344,7 @@ printSyntaxError(const Rows rows) {
 	auto labels = std::get<1>(::calculateAddress(rows));
 	
 	for (auto row : rows) {
-		if (row.raddr().label() == "")
+		if (row.raddr().label() == "" || row.raddr().label() == "*")
 			continue;
 
 		if (labels.find(row.raddr().label()) == labels.end()) {
@@ -369,7 +370,7 @@ writeObjectFile(const Rows rows, const std::string filename) {
 
 	auto [addresses, labels] = ::calculateAddress(rows);
 	for (auto row : rows) {
-		if (row.raddr().label() == "")
+		if (row.raddr().label() == "" || row.raddr().label() == "*")
 			continue;
 
 		if (labels.find(row.raddr().label()) == labels.end()) {
@@ -388,30 +389,30 @@ writeObjectFile(const Rows rows, const std::string filename) {
 		if (row.instruction().size() == 0)
 			continue;
 
-		auto opecode = row.instruction().at(0).str();
-		if (opecode == "TITLE") {
+		
+		if (auto opecode = row.instruction().at(0).str(); opecode == "TITLE") {
 			ofs << "MM " << row.instruction().at(1).str();
 		}
 		else if (opecode != "ORG" && opecode != "END") {
 			ofs << std::endl;
 			ofs << std::hex << std::setw(4) << std::setfill('0') << std::uppercase << addresses.at(index);
-			ofs << ' ';
+			ofs << "  ";
 
 			auto [op, ra, rb, nd] = ::setRegister(row, addresses, labels, index);
 			M1Word word = op;
 			word = (word << 2) + ra;
 			word = (word << 2) + rb;
 			word = (word << 8) + nd;
-			if (row.instruction().at(0).str() == "DC") {
+			if (opecode == "DC") {
 				ofs << std::hex << std::setw(4) << std::setfill('0') << std::uppercase << word;
 			}
-			else if (row.instruction().at(0).str() == "DS") {
+			else if (opecode == "DS") {
 				ofs << "0000";
 
 				for (int i = 0; i < word - 1; i++) {
 					ofs << std::endl;
 					ofs << std::hex << std::setw(4) << std::setfill('0') << std::uppercase << addresses.at(++index);
-					ofs << " 0000";
+					ofs << "  0000";
 				}
 
 				continue;
@@ -419,7 +420,7 @@ writeObjectFile(const Rows rows, const std::string filename) {
 			else {
 				ofs << std::hex << (op & 0xF);
 				ofs << std::hex << ((ra & 0x3) << 2) + (rb & 0x3);
-				ofs << std::hex << std::setw(2) << std::setfill('0') << (nd & 0xF);
+				ofs << std::hex << std::setw(2) << std::setfill('0') << (nd & 0xFF);
 			}
 
 			index++;
