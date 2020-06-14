@@ -6,21 +6,21 @@ jobs:
     steps:
       - checkout
       - run:
-        name: Building
-        command: source ./script/build.sh
+          name: Building
+          command: source ./script/build.sh
   unittest:
     docker:
       - image: ubuntu:18.04
     steps:
       - checkout
       - run:
-        name: Running unit tests
-        command: source ./script/unittest.sh
+          name: Running unit tests
+          command: source ./script/unittest.sh
   systemtest:
     docker:
       - image: ubuntu:18.04
     steps:
       - checkout
       - run:
-        name: Running system tests
-        command: source ./script/build.sh; source ./script/systemtest.sh
+          name: Running system tests
+          command: source ./script/build.sh; source ./script/systemtest.sh
