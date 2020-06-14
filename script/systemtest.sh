@@ -58,9 +58,8 @@ fi
 
 return_count=0
 for f in $(ls test/systemtest/input/*.asm); do
-    test_micro1_as\
-        $f
-    return_count=$(expr $return_count + $?)
+    test_micro1_as $f
+    return_count=$(($return_count + $?))
 done
 
 cd ..
