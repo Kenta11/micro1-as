@@ -5,4 +5,6 @@ cd build
 
 cmake -DBUILD_UNIT_TESTS=ON ..
 make -j`nproc`
-ctest
+make test
+
+cd ..
