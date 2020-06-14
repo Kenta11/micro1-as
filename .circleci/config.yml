@@ -32,5 +32,6 @@ workflows:
   version: 2
   tests:
     jobs:
+      - build
       - unittest
       - systemtest
