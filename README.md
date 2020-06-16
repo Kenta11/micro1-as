@@ -3,6 +3,7 @@
 [![Ubuntu](https://github.com/Kenta11/micro1-as/workflows/Ubuntu/badge.svg)](https://github.com/Kenta11/micro1-as)
 [![Travis CI](https://travis-ci.org/Kenta11/micro1-as.svg?branch=master)](https://travis-ci.org/Kenta11/micro1-as)
 [![Circle CI](https://circleci.com/gh/Kenta11/micro1-as.svg?style=svg)](https://circleci.com/gh/Kenta11/micro1-as)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 This project is a MICRO-1 assembler written in C++17. It uses only C++17 standard libraries, so it is easy to understand. It can be used in Windows and Linux environments.
 
