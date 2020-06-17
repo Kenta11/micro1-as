@@ -1,15 +1,15 @@
 // Copyright (c) 2020 Kenta Arai
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a
 // copy of this software and associated documentation files (the "Software"),
 // to deal in the Software without restriction, including without limitation
 // the rights to use, copy, modify, merge, publish, distribute, sublicense,
 // and/or sell copies of the Software, and to permit persons to whom the
 // Software is furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in
 // all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
 // OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -33,10 +33,10 @@
 namespace micro1 {
 
 /**
-* @brief tokenize a source program
-* @param[in] ifs a source program
-* @return Tokens lexical tokens
-*/
+ * @brief tokenize a source program
+ * @param[in] ifs a source program
+ * @return Tokens lexical tokens
+ */
 Tokens
 tokenize(std::ifstream& ifs) {
     Tokens tokens;
@@ -48,7 +48,7 @@ tokenize(std::ifstream& ifs) {
             if (std::isspace(line[pos])) {
                 continue;
             }
-            
+
             // if line[pos] is comment, it's skipped.
             if (line[pos] == ';') {
                 break;
@@ -62,24 +62,24 @@ tokenize(std::ifstream& ifs) {
                     tokens.emplace_back(Token(TokenKind::RPAREN, line, 1, row, pos));
                     break;
                 case '*':
-                    tokens.emplace_back(Token(TokenKind::STAR,   line, 1, row, pos));
+                    tokens.emplace_back(Token(TokenKind::STAR, line, 1, row, pos));
                     break;
-                case '+': [[fallthrough]];
+                case '+':
+                    [[fallthrough]];
                 case '-':
-                    tokens.emplace_back(Token(TokenKind::SIGN,   line, 1, row, pos));
+                    tokens.emplace_back(Token(TokenKind::SIGN, line, 1, row, pos));
                     break;
                 case ',':
-                    tokens.emplace_back(Token(TokenKind::COMMA,  line, 1, row, pos));
+                    tokens.emplace_back(Token(TokenKind::COMMA, line, 1, row, pos));
                     break;
                 case ':':
-                    tokens.emplace_back(Token(TokenKind::COLON,  line, 1, row, pos));
+                    tokens.emplace_back(Token(TokenKind::COLON, line, 1, row, pos));
                     break;
                 case '\'':
                     if (pos + 2 < line.length()) {
                         tokens.emplace_back(Token(TokenKind::CHARS, line, 3, row, pos));
                         pos += 2;
-                    }
-                    else {
+                    } else {
                         tokens.emplace_back(Token(TokenKind::INVALID, line, 1, row, pos));
                     }
                     break;
@@ -93,14 +93,14 @@ tokenize(std::ifstream& ifs) {
                             if (!(std::isxdigit(line[pos])))
                                 break;
                         }
-                        tokens.emplace_back(Token(TokenKind::INTEGER, line, pos - start, row,  start));
+                        tokens.emplace_back(Token(TokenKind::INTEGER, line, pos - start, row, start));
                         pos--;
                     } else if (std::isalpha(line[pos])) {
                         while (++pos < line.length()) {
                             if (!std::isalnum(line[pos]))
                                 break;
                         }
-                        tokens.emplace_back(Token(TokenKind::STRING,  line, pos - start, row,  start));
+                        tokens.emplace_back(Token(TokenKind::STRING, line, pos - start, row, start));
                         pos--;
                     } else {
                         tokens.emplace_back(Token(TokenKind::INVALID, line, 1, row, pos));
@@ -117,4 +117,4 @@ tokenize(std::ifstream& ifs) {
     return tokens;
 }
 
-}
+}  // namespace micro1
