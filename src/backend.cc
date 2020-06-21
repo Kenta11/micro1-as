@@ -55,7 +55,7 @@ calculateAddress(const micro1::Rows rows) {
         else if (row.instruction().at(0).str() == "END")
             continue;
         else if (row.instruction().at(0).str() == "ORG") {
-            addr = std::stoi(row.instruction().at(1).str(), nullptr, 16);
+            addr = static_cast<micro1::M1Addr>(std::stoi(row.instruction().at(1).str(), nullptr, 16));
             continue;
         }
 
@@ -67,7 +67,7 @@ calculateAddress(const micro1::Rows rows) {
             for (micro1::M1Addr offset = 0; offset < storage_size; offset++) {
                 addresses.emplace_back(addr + offset);
             }
-            addr += storage_size;
+            addr += static_cast<micro1::M1Addr>(storage_size);
         } else {
             addresses.emplace_back(addr++);
         }
@@ -79,7 +79,7 @@ calculateAddress(const micro1::Rows rows) {
 uint16_t
 extractUInt(TokenIterator head) {
     if ((*head).kind() == micro1::TokenKind::INTEGER)
-        return std::stoi((*head).str());
+        return static_cast<uint16_t>(std::stoi((*head).str()));
 
     int base = 0;
     if ((*head).str() == "X")
@@ -98,7 +98,7 @@ extractSInt(TokenIterator head) {
         if ((*head).str()[0] == '+')
             return extractUInt(head + 1);
         else
-            return 0x10000 - extractUInt(head + 1);
+            return static_cast<int16_t>(0x10000 - extractUInt(head + 1));
     }
 
     return extractUInt(head);
@@ -150,7 +150,7 @@ setRegister(micro1::Row row, std::vector<micro1::M1Addr> addresses, std::map<std
                 else if (row.instruction().at(1).str() == "LPT")
                     nd = 1;
             } else if (row.instruction().at(1).kind() == micro1::TokenKind::INTEGER) {
-                nd = std::stoi(row.instruction().at(1).str());
+                nd = static_cast<uint8_t>(std::stoi(row.instruction().at(1).str()));
             }
             break;
         case micro1::InstGroup::GROUP8:

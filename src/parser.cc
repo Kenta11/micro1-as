@@ -186,7 +186,7 @@ parse(Tokens tokens) {
     ::State state = ::State::WAIT_TITLE;
     std::string label;
     std::string reference;
-    int64_t offset;
+    int64_t offset = 0;
     Rows ret;
     Tokens::iterator iter = tokens.begin();
     Tokens instruction;

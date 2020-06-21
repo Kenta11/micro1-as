@@ -149,7 +149,7 @@ main(const int argc, const char **argv) {
             do {
                 cout << "(Y/N):";
                 std::getline(cin, line);
-                yn = (line.length() > 0) ? std::tolower(line[0]) : 0;
+                yn = (line.length() > 0) ? static_cast<char>(std::tolower(line[0])) : 0;
             } while (yn != 'y' && yn != 'n');
         } while (yn == 'y');
     } else if (mode == "command") {
