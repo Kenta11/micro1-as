@@ -49,12 +49,24 @@ function test_micro1_as () {
 }
 
 echo "Starting system tests..."
-cd build/
 
-if [ ! -f "./bin/micro1-as" ]; then
+# Set input files
+if [ ! -d "build/test/systemtest/input/" ]; then
+    mkdir -p build/test/systemtest/input/
+fi
+cp test/systemtest/input/* build/test/systemtest/input/
+# Set expect files
+if [ ! -d "build/test/systemtest/expect/" ]; then
+    mkdir -p build/test/systemtest/expect/
+fi
+cp test/systemtest/expect/* build/test/systemtest/expect/
+
+if [ ! -f "build/bin/micro1-as" ]; then
     echo "FATAL ERROR: micro1-as not found"
     return 1
 fi
+
+cd build/
 
 return_count=0
 for f in $(ls test/systemtest/input/*.asm); do

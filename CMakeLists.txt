@@ -79,9 +79,3 @@ if(BUILD_UNIT_TESTS)
     target_link_libraries(test_parser gtest gtest_main)
     add_test(NAME test_parser COMMAND ./bin/test_parser)
 endif()
-
-file(GLOB input_files_for_systemtest test/systemtest/input/*)
-file(COPY ${input_files_for_systemtest} DESTINATION ${CMAKE_BINARY_DIR}/test/systemtest/input)
-
-file(GLOB expect_files_for_systemtest test/systemtest/expect/*)
-file(COPY ${expect_files_for_systemtest} DESTINATION ${CMAKE_BINARY_DIR}/test/systemtest/expect)
