@@ -21,13 +21,25 @@
 cmake_minimum_required(VERSION 3.10)
 project(micro1-as CXX)
 set(CMAKE_CXX_STANDARD 17)
-if(UNIX)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+if(CMAKE_COMPILER_IS_GNUCXX)
     # warnings
     if(NOT CMAKE_CXX_FLAGS MATCHES "-Wall")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
     endif ()
     if(NOT CMAKE_CXX_FLAGS MATCHES "-Wextra")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wextra")
+    endif()
+    # optimization
+    if(CMAKE_CXX_FLAGS MATCHES "-O[0-3]")
+        string(REGEX REPLACE "-O[0-3]" "-O2" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+    else()
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
+    endif()
+elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    # warnings
+    if(NOT CMAKE_CXX_FLAGS MATCHES "-Weverything")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Weverything")
     endif()
     # optimization
     if(CMAKE_CXX_FLAGS MATCHES "-O[0-3]")
@@ -48,7 +60,10 @@ elseif(MSVC)
     else()
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /O2")
     endif()
+else()
+    message(FATAL_ERROR "Not supported compiler!")
 endif()
+
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "bin")
 
 option(BUILD_UNIT_TESTS "Build unit tests" OFF)
