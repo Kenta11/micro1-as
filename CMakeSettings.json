@@ -13,7 +13,7 @@
       "variables": [
         {
           "name": "BUILD_UNIT_TESTS",
-          "value": "False",
+          "value": "True",
           "type": "BOOL"
         }
       ]
@@ -28,7 +28,13 @@
       "buildCommandArgs": "-v",
       "ctestCommandArgs": "",
       "inheritEnvironments": [ "msvc_x64_x64" ],
-      "variables": []
+      "variables": [
+        {
+          "name": "BUILD_UNIT_TESTS",
+          "value": "False",
+          "type": "BOOL"
+        }
+      ]
     }
   ]
 }
