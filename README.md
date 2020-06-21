@@ -26,19 +26,16 @@ After compiling, you can find out `micro1-as` program under `bin/`.
 ### Linux (Ubuntu / ManjaroLinux)
 
 - CMake (3.10 >=)
-- g++ (which supports C++17)
+- g++ or clang++
 
 ## Tests
 
 ### Unit tests
 
-If you want to unit-test C++ source code, add `BUILD_UNIT_TESTS` option to cmake command.
+If you want to unit-test C++ source code, run `source ./script/unittest.sh`.
 
 ```
-$ mkdir build # in micro1-as directory
-$ cd build
-$ cmake -DBUILD_UNIT_TESTS=ON ..
-$ make -j`nproc`; ctest
+$ source ./script/unittest.sh
 ```
 
 ### System tests
