@@ -5,7 +5,7 @@
 [![Circle CI](https://circleci.com/gh/Kenta11/micro1-as.svg?style=svg)](https://circleci.com/gh/Kenta11/micro1-as)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-This project is a MICRO-1 assembler written in C++17. It uses only C++17 standard libraries, so it is easy to understand. It can be used in Windows and Linux environments.
+`micro1-as` is a MICRO-1 assembler written in C++17. It uses only C++17 standard libraries, so it is easy to understand. It can be used in Windows and Linux environments.
 
 ## Quick building
 
@@ -15,7 +15,7 @@ $ cd micro1-as
 $ source ./script/build.sh
 ```
 
-After compiling, you can find out `micro1-as` program under `bin/`.
+After compiling, you can find out `micro1-as` program under `build/bin/`.
 
 ## Environments
 
@@ -23,7 +23,7 @@ After compiling, you can find out `micro1-as` program under `bin/`.
 
 - Visual Studio 2019
 
-### Linux (Ubuntu / ManjaroLinux)
+### Linux (Ubuntu / Manjaro)
 
 - CMake (3.10 >=)
 - g++ or clang++
@@ -49,7 +49,7 @@ $ source ./script/systemtest.sh
 
 ## License
 
-Files are released under the [MIT license](LICENSE). However, the license is not applied to third-party libraries.
+All files are licensed with [MIT license](LICENSE) excluding third-party projects.
 
 ## Contact
 
