@@ -647,8 +647,7 @@ parse(Tokens tokens) {
 
                     if ((*(iter - 2)).str() == "ORG") {
                         addr = static_cast<M1Addr>(std::stoi((*(iter - 1)).str(), nullptr, 16));
-                    }
-                    else if ((*(iter - 2)).str() == "DS") {
+                    } else if ((*(iter - 2)).str() == "DS") {
                         addr = static_cast<M1Addr>(std::stoi((*(iter - 1)).str(), nullptr, 10));
                     } else {
                         addr++;

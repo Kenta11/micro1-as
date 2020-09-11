@@ -28,8 +28,8 @@
 #ifndef PARSER_H
 #define PARSER_H
 
-#include "token.h"
 #include "micro1.h"
+#include "token.h"
 
 namespace micro1 {
 
