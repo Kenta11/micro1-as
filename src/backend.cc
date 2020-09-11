@@ -110,7 +110,7 @@ extractAddress(micro1::ReferenceAddress raddr, micro1::M1Addr current_address, s
 }
 
 std::tuple<uint8_t, std::uint8_t, std::uint8_t, std::uint8_t>
-setRegister(micro1::Row row, std::vector<micro1::M1Addr> addresses, std::map<std::string, micro1::M1Addr> labels, int64_t index) {
+setRegister(micro1::Row row, std::map<std::string, micro1::M1Addr> labels) {
     auto [op, ra, rb] = micro1::getEncoding(row.instruction().at(0).str());
     uint8_t nd = 0;
 
@@ -138,10 +138,10 @@ setRegister(micro1::Row row, std::vector<micro1::M1Addr> addresses, std::map<std
             break;
         case micro1::InstGroup::GROUP5:
             rb = std::stoi(row.instruction().at(1).str(), nullptr, 10) & 0x3;
-            nd = extractAddress(row.raddr(), addresses.at(index), labels);
+            nd = extractAddress(row.raddr(), row.addr(), labels);
             break;
         case micro1::InstGroup::GROUP6:
-            nd = extractAddress(row.raddr(), addresses.at(index), labels);
+            nd = extractAddress(row.raddr(), row.addr(), labels);
             break;
         case micro1::InstGroup::GROUP7:
             if (row.instruction().at(1).kind() == micro1::TokenKind::STRING) {
@@ -203,7 +203,7 @@ namespace micro1 {
 void
 writeListingFile(const Rows rows, const std::string filename) {
     std::ofstream ofs(filename);
-    auto [addresses, labels] = ::calculateAddress(rows);
+    auto labels = std::get<1>(::calculateAddress(rows));
 
     if (!ofs) {
         std::cerr << "FILE " << filename << " CAN'T BE OPENED." << std::endl;
@@ -234,7 +234,7 @@ writeListingFile(const Rows rows, const std::string filename) {
                 ofs << ' ';
         } else {
             // address
-            ofs << std::hex << std::setw(4) << std::setfill('0') << std::uppercase << addresses.at(index);
+            ofs << std::hex << std::setw(4) << std::setfill('0') << std::uppercase << row.addr();
             ofs << ' ';
 
             // word data
@@ -243,7 +243,7 @@ writeListingFile(const Rows rows, const std::string filename) {
                     ofs << ' ';
                 }
             } else {
-                auto [op, ra, rb, nd] = ::setRegister(row, addresses, labels, index);
+                auto [op, ra, rb, nd] = ::setRegister(row, labels);
                 if (row.instruction().at(0).str() == "DC") {
                     ofs << std::hex << std::uppercase << static_cast<uint32_t>(op);
                     ofs << std::hex << std::uppercase << static_cast<uint32_t>((ra << 2) + rb);
@@ -253,7 +253,7 @@ writeListingFile(const Rows rows, const std::string filename) {
 
                     for (int i = 0; i < (op << 12) + (ra << 10) + (rb << 8) + nd - 1; i++) {
                         ofs << "  ";
-                        ofs << std::hex << std::setw(4) << std::setfill('0') << std::uppercase << addresses.at(++index);
+                        ofs << std::hex << std::setw(4) << std::setfill('0') << std::uppercase << row.addr() + i;
                         ofs << " 0000" << std::endl;
                     }
 
@@ -358,7 +358,7 @@ writeObjectFile(const Rows rows, const std::string filename) {
     if (std::count_if(rows.begin(), rows.end(), [](auto row) { return row.dinfo().importance() == DebugInfoImportance::ERROR; }) != 0)
         return false;
 
-    auto [addresses, labels] = ::calculateAddress(rows);
+    auto labels = std::get<1>(::calculateAddress(rows));
     for (auto row : rows) {
         if (row.raddr().label() == "" || row.raddr().label() == "*")
             continue;
@@ -383,10 +383,10 @@ writeObjectFile(const Rows rows, const std::string filename) {
             ofs << "MM " << row.instruction().at(1).str();
         } else if (opecode != "ORG" && opecode != "END") {
             ofs << std::endl;
-            ofs << std::hex << std::setw(4) << std::setfill('0') << std::uppercase << addresses.at(index);
+            ofs << std::hex << std::setw(4) << std::setfill('0') << std::uppercase << row.addr();
             ofs << "  ";
 
-            auto [op, ra, rb, nd] = ::setRegister(row, addresses, labels, index);
+            auto [op, ra, rb, nd] = ::setRegister(row, labels);
             M1Word word = op;
             word = (word << 2) + ra;
             word = (word << 2) + rb;
@@ -396,9 +396,9 @@ writeObjectFile(const Rows rows, const std::string filename) {
             } else if (opecode == "DS") {
                 ofs << "0000";
 
-                for (int i = 0; i < word - 1; i++) {
+                for (int i = 1; i < word; i++) {
                     ofs << std::endl;
-                    ofs << std::hex << std::setw(4) << std::setfill('0') << std::uppercase << addresses.at(++index);
+                    ofs << std::hex << std::setw(4) << std::setfill('0') << std::uppercase << row.addr() + i;
                     ofs << "  0000";
                 }
 

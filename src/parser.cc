@@ -185,6 +185,7 @@ Rows
 parse(Tokens tokens) {
     ::State state = ::State::WAIT_TITLE;
     std::string label;
+    M1Addr addr = 0;
     std::string reference;
     int64_t offset = 0;
     Rows ret;
@@ -195,14 +196,14 @@ parse(Tokens tokens) {
         switch (state) {
             case ::State::WAIT_TITLE:
                 if ((*iter).kind() == TokenKind::EOL) {
-                    ret.emplace_back(Row("", {}, DebugInfo(DebugInfoImportance::INFO, "", 0), ReferenceAddress("", 0)));
+                    ret.emplace_back(Row("", addr, {}, DebugInfo(DebugInfoImportance::INFO, "", 0), ReferenceAddress("", 0)));
                 } else if ((*iter).str() == "TITLE") {
                     state = ::State::LOAD_TITLE_NAME;
                     instruction.emplace_back(*iter);
                 } else {
                     state = ::State::LOAD_LABEL;
                     instruction.emplace_back(*iter);
-                    ret.emplace_back(Row("", instruction, DebugInfo(DebugInfoImportance::ERROR, "Required \"TITLE\".", instruction.size() - 1), ReferenceAddress("", 0)));
+                    ret.emplace_back(Row("", addr, instruction, DebugInfo(DebugInfoImportance::ERROR, "Required \"TITLE\".", instruction.size() - 1), ReferenceAddress("", 0)));
                     instruction.clear();
                     ::skipToEOL(iter, tokens.end());
                 }
@@ -215,7 +216,7 @@ parse(Tokens tokens) {
                     state = ::State::LOAD_TITLE_EOL;
                 } else {
                     state = ::State::LOAD_LABEL;
-                    ret.emplace_back(Row("", instruction, DebugInfo(DebugInfoImportance::ERROR, "Required title name.", instruction.size() - 1), ReferenceAddress("", 0)));
+                    ret.emplace_back(Row("", addr, instruction, DebugInfo(DebugInfoImportance::ERROR, "Required title name.", instruction.size() - 1), ReferenceAddress("", 0)));
                     instruction.clear();
                     ::skipToEOL(iter, tokens.end());
                 }
@@ -225,11 +226,11 @@ parse(Tokens tokens) {
                 state = ::State::LOAD_LABEL;
 
                 if ((*iter).kind() == TokenKind::EOL) {
-                    ret.emplace_back(Row("", instruction, DebugInfo(DebugInfoImportance::INFO, "", 0), ReferenceAddress("", 0)));
+                    ret.emplace_back(Row("", addr, instruction, DebugInfo(DebugInfoImportance::INFO, "", 0), ReferenceAddress("", 0)));
                     instruction.clear();
                 } else {
                     instruction.emplace_back(*iter);
-                    ret.emplace_back(Row("", instruction, DebugInfo(DebugInfoImportance::ERROR, "Too many tokens.", instruction.size() - 1), ReferenceAddress("", 0)));
+                    ret.emplace_back(Row("", addr, instruction, DebugInfo(DebugInfoImportance::ERROR, "Too many tokens.", instruction.size() - 1), ReferenceAddress("", 0)));
                     instruction.clear();
                     ::skipToEOL(iter, tokens.end());
                 }
@@ -237,7 +238,7 @@ parse(Tokens tokens) {
                 break;
             case ::State::LOAD_LABEL:
                 if ((*iter).kind() == TokenKind::EOL) {
-                    ret.emplace_back(Row("", {}, DebugInfo(DebugInfoImportance::INFO, "", 0), ReferenceAddress("", 0)));
+                    ret.emplace_back(Row("", addr, {}, DebugInfo(DebugInfoImportance::INFO, "", 0), ReferenceAddress("", 0)));
                 } else if ((*iter).kind() == TokenKind::STRING) {
                     state = ::State::LOAD_COLON;
                     label = (*iter).str();
@@ -245,7 +246,7 @@ parse(Tokens tokens) {
                     offset = 0;
                 } else {
                     instruction.emplace_back(*iter);
-                    ret.emplace_back(Row("", instruction, DebugInfo(DebugInfoImportance::ERROR, "Required label name or opecode.", instruction.size() - 1), ReferenceAddress("", 0)));
+                    ret.emplace_back(Row("", addr, instruction, DebugInfo(DebugInfoImportance::ERROR, "Required label name or opecode.", instruction.size() - 1), ReferenceAddress("", 0)));
                     instruction.clear();
                     ::skipToEOL(iter, tokens.end());
                 }
@@ -265,7 +266,7 @@ parse(Tokens tokens) {
 
                 if ((*iter).kind() != TokenKind::STRING) {
                     state = ::State::LOAD_LABEL;
-                    ret.emplace_back(Row(label, instruction, DebugInfo(DebugInfoImportance::ERROR, "Required opecode.", instruction.size() - 1), ReferenceAddress("", 0)));
+                    ret.emplace_back(Row(label, addr, instruction, DebugInfo(DebugInfoImportance::ERROR, "Required opecode.", instruction.size() - 1), ReferenceAddress("", 0)));
                     instruction.clear();
                     skipToEOL(iter, tokens.end());
                 } else {
@@ -305,7 +306,7 @@ parse(Tokens tokens) {
                                 state = ::State::LOAD_END_EOL;
                             } else {
                                 state = ::State::LOAD_LABEL;
-                                ret.emplace_back(Row(label, instruction, DebugInfo(DebugInfoImportance::ERROR, "Unknown opecode.", instruction.size() - 1), ReferenceAddress("", 0)));
+                                ret.emplace_back(Row(label, addr, instruction, DebugInfo(DebugInfoImportance::ERROR, "Unknown opecode.", instruction.size() - 1), ReferenceAddress("", 0)));
                                 instruction.clear();
                                 skipToEOL(iter, tokens.end());
                             }
@@ -322,7 +323,7 @@ parse(Tokens tokens) {
                     state = ::State::LOAD_COMMA;
                 } else {
                     state = ::State::LOAD_LABEL;
-                    ret.emplace_back(Row(label, instruction, DebugInfo(DebugInfoImportance::ERROR, "Required integer for rb register.", instruction.size() - 1), ReferenceAddress("", 0)));
+                    ret.emplace_back(Row(label, addr, instruction, DebugInfo(DebugInfoImportance::ERROR, "Required integer for rb register.", instruction.size() - 1), ReferenceAddress("", 0)));
                     instruction.clear();
                     skipToEOL(iter, tokens.end());
                 }
@@ -351,7 +352,7 @@ parse(Tokens tokens) {
                     }
                 } else {
                     state = ::State::LOAD_LABEL;
-                    ret.emplace_back(Row(label, instruction, DebugInfo(DebugInfoImportance::ERROR, "Required comma.", instruction.size() - 1), ReferenceAddress("", 0)));
+                    ret.emplace_back(Row(label, addr, instruction, DebugInfo(DebugInfoImportance::ERROR, "Required comma.", instruction.size() - 1), ReferenceAddress("", 0)));
                     instruction.clear();
                     skipToEOL(iter, tokens.end());
                 }
@@ -370,7 +371,7 @@ parse(Tokens tokens) {
                     }
                 } else {
                     state = ::State::LOAD_LABEL;
-                    ret.emplace_back(Row(label, instruction, DebugInfo(DebugInfoImportance::ERROR, "Required unsigned integer.", instruction.size() - 1), ReferenceAddress("", 0)));
+                    ret.emplace_back(Row(label, addr, instruction, DebugInfo(DebugInfoImportance::ERROR, "Required unsigned integer.", instruction.size() - 1), ReferenceAddress("", 0)));
                     instruction.clear();
                     skipToEOL(iter, tokens.end());
                 }
@@ -382,12 +383,13 @@ parse(Tokens tokens) {
                     state = ::State::LOAD_OP1_RA;
                 } else if ((*iter).kind() == TokenKind::EOL) {
                     state = ::State::LOAD_LABEL;
-                    ret.emplace_back(Row(label, instruction, DebugInfo(DebugInfoImportance::INFO, "", 0), ReferenceAddress("", 0)));
+                    ret.emplace_back(Row(label, addr, instruction, DebugInfo(DebugInfoImportance::INFO, "", 0), ReferenceAddress("", 0)));
                     instruction.clear();
+                    addr++;
                 } else {
                     state = ::State::LOAD_LABEL;
                     instruction.emplace_back(*iter);
-                    ret.emplace_back(Row(label, instruction, DebugInfo(DebugInfoImportance::ERROR, "Required an end of line or a left parenthesis.", instruction.size() - 1), ReferenceAddress("", 0)));
+                    ret.emplace_back(Row(label, addr, instruction, DebugInfo(DebugInfoImportance::ERROR, "Required an end of line or a left parenthesis.", instruction.size() - 1), ReferenceAddress("", 0)));
                     instruction.clear();
                     skipToEOL(iter, tokens.end());
                 }
@@ -400,7 +402,7 @@ parse(Tokens tokens) {
                     state = ::State::LOAD_OP1_RPAREN;
                 } else {
                     state = ::State::LOAD_LABEL;
-                    ret.emplace_back(Row(label, instruction, DebugInfo(DebugInfoImportance::ERROR, "Required integer for ra register.", instruction.size() - 1), ReferenceAddress("", 0)));
+                    ret.emplace_back(Row(label, addr, instruction, DebugInfo(DebugInfoImportance::ERROR, "Required integer for ra register.", instruction.size() - 1), ReferenceAddress("", 0)));
                     instruction.clear();
                     skipToEOL(iter, tokens.end());
                 }
@@ -413,7 +415,7 @@ parse(Tokens tokens) {
                     state = ::State::LOAD_INST_EOL;
                 } else {
                     state = ::State::LOAD_LABEL;
-                    ret.emplace_back(Row(label, instruction, DebugInfo(DebugInfoImportance::ERROR, "Required a right parenthesis.", instruction.size() - 1), ReferenceAddress("", 0)));
+                    ret.emplace_back(Row(label, addr, instruction, DebugInfo(DebugInfoImportance::ERROR, "Required a right parenthesis.", instruction.size() - 1), ReferenceAddress("", 0)));
                     instruction.clear();
                     skipToEOL(iter, tokens.end());
                 }
@@ -430,7 +432,7 @@ parse(Tokens tokens) {
                     }
                 } else {
                     state = ::State::LOAD_LABEL;
-                    ret.emplace_back(Row(label, instruction, DebugInfo(DebugInfoImportance::ERROR, "Required unsigned integer.", instruction.size() - 1), ReferenceAddress("", 0)));
+                    ret.emplace_back(Row(label, addr, instruction, DebugInfo(DebugInfoImportance::ERROR, "Required unsigned integer.", instruction.size() - 1), ReferenceAddress("", 0)));
                     instruction.clear();
                     skipToEOL(iter, tokens.end());
                 }
@@ -450,7 +452,7 @@ parse(Tokens tokens) {
                     }
                 } else {
                     state = ::State::LOAD_LABEL;
-                    ret.emplace_back(Row(label, instruction, DebugInfo(DebugInfoImportance::ERROR, "Required signed integer.", instruction.size() - 1), ReferenceAddress("", 0)));
+                    ret.emplace_back(Row(label, addr, instruction, DebugInfo(DebugInfoImportance::ERROR, "Required signed integer.", instruction.size() - 1), ReferenceAddress("", 0)));
                     instruction.clear();
                     skipToEOL(iter, tokens.end());
                 }
@@ -472,7 +474,7 @@ parse(Tokens tokens) {
                     }
                 } else {
                     state = ::State::LOAD_LABEL;
-                    ret.emplace_back(Row(label, instruction, DebugInfo(DebugInfoImportance::ERROR, "Required signed integer or a left parenthesis.", instruction.size() - 1), ReferenceAddress("", 0)));
+                    ret.emplace_back(Row(label, addr, instruction, DebugInfo(DebugInfoImportance::ERROR, "Required signed integer or a left parenthesis.", instruction.size() - 1), ReferenceAddress("", 0)));
                     instruction.clear();
                     skipToEOL(iter, tokens.end());
                 }
@@ -486,7 +488,7 @@ parse(Tokens tokens) {
                 } else {
                     state = ::State::LOAD_LABEL;
                     instruction.emplace_back(*iter);
-                    ret.emplace_back(Row(label, instruction, DebugInfo(DebugInfoImportance::ERROR, "Required a left parenthesis.", instruction.size() - 1), ReferenceAddress("", 0)));
+                    ret.emplace_back(Row(label, addr, instruction, DebugInfo(DebugInfoImportance::ERROR, "Required a left parenthesis.", instruction.size() - 1), ReferenceAddress("", 0)));
                     instruction.clear();
                     skipToEOL(iter, tokens.end());
                 }
@@ -499,7 +501,7 @@ parse(Tokens tokens) {
                     state = ::State::LOAD_OP4_RPAREN;
                 } else {
                     state = ::State::LOAD_LABEL;
-                    ret.emplace_back(Row(label, instruction, DebugInfo(DebugInfoImportance::ERROR, "Required integer for ra register.", instruction.size() - 1), ReferenceAddress("", 0)));
+                    ret.emplace_back(Row(label, addr, instruction, DebugInfo(DebugInfoImportance::ERROR, "Required integer for ra register.", instruction.size() - 1), ReferenceAddress("", 0)));
                     instruction.clear();
                     skipToEOL(iter, tokens.end());
                 }
@@ -512,7 +514,7 @@ parse(Tokens tokens) {
                     state = ::State::LOAD_INST_EOL;
                 } else {
                     state = ::State::LOAD_LABEL;
-                    ret.emplace_back(Row(label, instruction, DebugInfo(DebugInfoImportance::ERROR, "Required a right parenthesis.", instruction.size() - 1), ReferenceAddress("", 0)));
+                    ret.emplace_back(Row(label, addr, instruction, DebugInfo(DebugInfoImportance::ERROR, "Required a right parenthesis.", instruction.size() - 1), ReferenceAddress("", 0)));
                     instruction.clear();
                     skipToEOL(iter, tokens.end());
                 }
@@ -533,7 +535,7 @@ parse(Tokens tokens) {
                     }
                 } else {
                     state = ::State::LOAD_LABEL;
-                    ret.emplace_back(Row(label, instruction, DebugInfo(DebugInfoImportance::ERROR, "Required address.", instruction.size() - 1), ReferenceAddress("", 0)));
+                    ret.emplace_back(Row(label, addr, instruction, DebugInfo(DebugInfoImportance::ERROR, "Required address.", instruction.size() - 1), ReferenceAddress("", 0)));
                     instruction.clear();
                     skipToEOL(iter, tokens.end());
                 }
@@ -554,7 +556,7 @@ parse(Tokens tokens) {
                     }
                 } else {
                     state = ::State::LOAD_LABEL;
-                    ret.emplace_back(Row(label, instruction, DebugInfo(DebugInfoImportance::ERROR, "Required address.", instruction.size() - 1), ReferenceAddress("", 0)));
+                    ret.emplace_back(Row(label, addr, instruction, DebugInfo(DebugInfoImportance::ERROR, "Required address.", instruction.size() - 1), ReferenceAddress("", 0)));
                     instruction.clear();
                     skipToEOL(iter, tokens.end());
                 }
@@ -568,7 +570,7 @@ parse(Tokens tokens) {
                         state = ::State::LOAD_INST_EOL;
                     } else {
                         state = ::State::LOAD_LABEL;
-                        ret.emplace_back(Row(label, instruction, DebugInfo(DebugInfoImportance::ERROR, "Unknown device name.", instruction.size() - 1), ReferenceAddress("", 0)));
+                        ret.emplace_back(Row(label, addr, instruction, DebugInfo(DebugInfoImportance::ERROR, "Unknown device name.", instruction.size() - 1), ReferenceAddress("", 0)));
                         instruction.clear();
                         skipToEOL(iter, tokens.end());
                     }
@@ -577,13 +579,13 @@ parse(Tokens tokens) {
                         state = ::State::LOAD_INST_EOL;
                     } else {
                         state = ::State::LOAD_LABEL;
-                        ret.emplace_back(Row(label, instruction, DebugInfo(DebugInfoImportance::ERROR, "Unknown device number.", instruction.size() - 1), ReferenceAddress("", 0)));
+                        ret.emplace_back(Row(label, addr, instruction, DebugInfo(DebugInfoImportance::ERROR, "Unknown device number.", instruction.size() - 1), ReferenceAddress("", 0)));
                         instruction.clear();
                         skipToEOL(iter, tokens.end());
                     }
                 } else {
                     state = ::State::LOAD_LABEL;
-                    ret.emplace_back(Row(label, instruction, DebugInfo(DebugInfoImportance::ERROR, "Required device name or number.", instruction.size() - 1), ReferenceAddress("", 0)));
+                    ret.emplace_back(Row(label, addr, instruction, DebugInfo(DebugInfoImportance::ERROR, "Required device name or number.", instruction.size() - 1), ReferenceAddress("", 0)));
                     instruction.clear();
                     skipToEOL(iter, tokens.end());
                 }
@@ -605,7 +607,7 @@ parse(Tokens tokens) {
                     }
                 } else {
                     state = ::State::LOAD_LABEL;
-                    ret.emplace_back(Row(label, instruction, DebugInfo(DebugInfoImportance::ERROR, "Required constant value.", instruction.size() - 1), ReferenceAddress("", 0)));
+                    ret.emplace_back(Row(label, addr, instruction, DebugInfo(DebugInfoImportance::ERROR, "Required constant value.", instruction.size() - 1), ReferenceAddress("", 0)));
                     instruction.clear();
                     skipToEOL(iter, tokens.end());
                 }
@@ -618,7 +620,7 @@ parse(Tokens tokens) {
                     state = ::State::LOAD_INST_EOL;
                 } else {
                     state = ::State::LOAD_LABEL;
-                    ret.emplace_back(Row(label, instruction, DebugInfo(DebugInfoImportance::ERROR, "Required decimal.", instruction.size() - 1), ReferenceAddress("", 0)));
+                    ret.emplace_back(Row(label, addr, instruction, DebugInfo(DebugInfoImportance::ERROR, "Required decimal.", instruction.size() - 1), ReferenceAddress("", 0)));
                     instruction.clear();
                     skipToEOL(iter, tokens.end());
                 }
@@ -631,7 +633,7 @@ parse(Tokens tokens) {
                     state = ::State::LOAD_INST_EOL;
                 } else {
                     state = ::State::LOAD_LABEL;
-                    ret.emplace_back(Row(label, instruction, DebugInfo(DebugInfoImportance::ERROR, "Required hexadecimal.", instruction.size() - 1), ReferenceAddress("", 0)));
+                    ret.emplace_back(Row(label, addr, instruction, DebugInfo(DebugInfoImportance::ERROR, "Required hexadecimal.", instruction.size() - 1), ReferenceAddress("", 0)));
                     instruction.clear();
                     skipToEOL(iter, tokens.end());
                 }
@@ -641,10 +643,19 @@ parse(Tokens tokens) {
                 state = ::State::LOAD_LABEL;
 
                 if ((*iter).kind() == TokenKind::EOL) {
-                    ret.emplace_back(Row(label, instruction, DebugInfo(DebugInfoImportance::INFO, "", 0), ReferenceAddress(reference, offset)));
+                    ret.emplace_back(Row(label, addr, instruction, DebugInfo(DebugInfoImportance::INFO, "", 0), ReferenceAddress(reference, offset)));
+
+                    if ((*(iter - 2)).str() == "ORG") {
+                        addr = static_cast<M1Addr>(std::stoi((*(iter - 1)).str(), nullptr, 16));
+                    }
+                    else if ((*(iter - 2)).str() == "DS") {
+                        addr = static_cast<M1Addr>(std::stoi((*(iter - 1)).str(), nullptr, 10));
+                    } else {
+                        addr++;
+                    }
                 } else {
                     instruction.emplace_back(*iter);
-                    ret.emplace_back(Row(label, instruction, DebugInfo(DebugInfoImportance::ERROR, "Too many tokens.", instruction.size() - 1), ReferenceAddress("", 0)));
+                    ret.emplace_back(Row(label, addr, instruction, DebugInfo(DebugInfoImportance::ERROR, "Too many tokens.", instruction.size() - 1), ReferenceAddress("", 0)));
                     skipToEOL(iter, tokens.end());
                 }
 
@@ -654,10 +665,10 @@ parse(Tokens tokens) {
                 state = ::State::FINAL;
 
                 if ((*iter).kind() == TokenKind::EOL) {
-                    ret.emplace_back(Row(label, instruction, DebugInfo(DebugInfoImportance::INFO, "", 0), ReferenceAddress("", 0)));
+                    ret.emplace_back(Row(label, addr, instruction, DebugInfo(DebugInfoImportance::INFO, "", 0), ReferenceAddress("", 0)));
                 } else {
                     instruction.emplace_back(*iter);
-                    ret.emplace_back(Row(label, instruction, DebugInfo(DebugInfoImportance::ERROR, "Too many tokens.", instruction.size() - 1), ReferenceAddress("", 0)));
+                    ret.emplace_back(Row(label, addr, instruction, DebugInfo(DebugInfoImportance::ERROR, "Too many tokens.", instruction.size() - 1), ReferenceAddress("", 0)));
                     skipToEOL(iter, tokens.end());
                 }
 
@@ -676,7 +687,7 @@ EndOfParse:
 
     for (; iter < tokens.end(); iter++) {
         if ((*iter).kind() == TokenKind::EOL) {
-            ret.emplace_back(Row(label, instruction, DebugInfo(DebugInfoImportance::ERROR, "Invalid token.", 0), ReferenceAddress("", 0)));
+            ret.emplace_back(Row(label, addr, instruction, DebugInfo(DebugInfoImportance::ERROR, "Invalid token.", 0), ReferenceAddress("", 0)));
             skipToEOL(iter, tokens.end());
         } else {
             instruction.emplace_back(*iter);
@@ -684,7 +695,7 @@ EndOfParse:
     }
 
     if (instruction.size() != 0) {
-        ret.emplace_back(Row(label, instruction, DebugInfo(DebugInfoImportance::ERROR, "Invalid token.", 0), ReferenceAddress("", 0)));
+        ret.emplace_back(Row(label, addr, instruction, DebugInfo(DebugInfoImportance::ERROR, "Invalid token.", 0), ReferenceAddress("", 0)));
         skipToEOL(iter, tokens.end());
     }
 

@@ -40,6 +40,7 @@ namespace {
         micro1::Rows expected = {
             micro1::Row(
                 "",
+                0,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "TITLE InputForParserGROUP1",           5,  1,  0),
                     micro1::Token(micro1::TokenKind::STRING,  "TITLE InputForParserGROUP1",          20,  1,  6)
@@ -49,6 +50,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                0,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    ADD  1, 37 (0)",                   3,  2,  4),
                     micro1::Token(micro1::TokenKind::INTEGER, "    ADD  1, 37 (0)",                   1,  2,  9),
@@ -63,6 +65,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                1,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    SUB  2, X\"B3DF (1)",              3,  3,  4),
                     micro1::Token(micro1::TokenKind::INTEGER, "    SUB  2, X\"B3DF (1)",              1,  3,  9),
@@ -79,6 +82,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                2,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    AND  3, O\"314232 (2)",            3,  4,  4),
                     micro1::Token(micro1::TokenKind::INTEGER, "    AND  3, O\"314232 (2)",            1,  4,  9),
@@ -95,6 +99,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                3,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    OR   0, B\"1010010110100101 (3)",  2,  5,  4),
                     micro1::Token(micro1::TokenKind::INTEGER, "    OR   0, B\"1010010110100101 (3)",  1,  5,  9),
@@ -111,6 +116,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                4,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    XOR  1, 43",                       3,  6,  4),
                     micro1::Token(micro1::TokenKind::INTEGER, "    XOR  1, 43",                       1,  6,  9),
@@ -122,6 +128,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                5,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    MULT 2, X\"B2F2",                  4,  7,  4),
                     micro1::Token(micro1::TokenKind::INTEGER, "    MULT 2, X\"B2F2",                  1,  7,  9),
@@ -135,6 +142,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                6,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    DIV  3, O\"172712",                3,  8,  4),
                     micro1::Token(micro1::TokenKind::INTEGER, "    DIV  3, O\"172712",                1,  8,  9),
@@ -148,6 +156,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                7,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    CMP  0, B\"1011010011001101",      3,  9,  4),
                     micro1::Token(micro1::TokenKind::INTEGER, "    CMP  0, B\"1011010011001101",      1,  9,  9),
@@ -161,6 +170,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                8,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    EX   1, (0)",                      2, 10,  4),
                     micro1::Token(micro1::TokenKind::INTEGER, "    EX   1, (0)",                      1, 10,  9),
@@ -174,6 +184,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                9,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "END",                                  3, 11,  0)
                 },
@@ -193,6 +204,7 @@ namespace {
         micro1::Rows expected = {
             micro1::Row(
                 "",
+                0,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "TITLE InputForParserGROUP2",       5,  1,  0),
                     micro1::Token(micro1::TokenKind::STRING,  "TITLE InputForParserGROUP2",      20,  1,  6)
@@ -202,6 +214,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                0,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    LC   0, 108",                  2,  2,  4),
                     micro1::Token(micro1::TokenKind::INTEGER, "    LC   0, 108",                  1,  2,  9),
@@ -213,6 +226,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                1,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    PUSH 1, X\"E0B3",              4,  3,  4),
                     micro1::Token(micro1::TokenKind::INTEGER, "    PUSH 1, X\"E0B3",              1,  3,  9),
@@ -226,6 +240,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                2,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    POP  2, O\"173210",            3,  4,  4),
                     micro1::Token(micro1::TokenKind::INTEGER, "    POP  2, O\"173210",            1,  4,  9),
@@ -239,6 +254,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                3,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    LC   3, B\"1001010101101001",  2,  5,  4),
                     micro1::Token(micro1::TokenKind::INTEGER, "    LC   3, B\"1001010101101001",  1,  5,  9),
@@ -252,6 +268,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                4,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "END",                              3,  6,  0)
                 },
@@ -271,6 +288,7 @@ namespace {
         micro1::Rows expected = {
             micro1::Row(
                 "",
+                0,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "TITLE InputForParserGROUP3",       5,  1,  0),
                     micro1::Token(micro1::TokenKind::STRING,  "TITLE InputForParserGROUP3",      20,  1,  6)
@@ -280,6 +298,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                0,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    SL  0, 4",                     2,  2,  4),
                     micro1::Token(micro1::TokenKind::INTEGER, "    SL  0, 4",                     1,  2,  8),
@@ -291,6 +310,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                1,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    SA  1, +34",                   2,  3,  4),
                     micro1::Token(micro1::TokenKind::INTEGER, "    SA  1, +34",                   1,  3,  8),
@@ -303,6 +323,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                2,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    SC  2, -49",                   2,  4,  4),
                     micro1::Token(micro1::TokenKind::INTEGER, "    SC  2, -49",                   1,  4,  8),
@@ -315,6 +336,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                3,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    BIX 3, X\"B24F",               3,  5,  4),
                     micro1::Token(micro1::TokenKind::INTEGER, "    BIX 3, X\"B24F",               1,  5,  8),
@@ -328,6 +350,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                4,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    SL  0, +X\"3BA",               2,  6,  4),
                     micro1::Token(micro1::TokenKind::INTEGER, "    SL  0, +X\"3BA",               1,  6,  8),
@@ -342,6 +365,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                5,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    SA  1, -X\"23AA",              2,  7,  4),
                     micro1::Token(micro1::TokenKind::INTEGER, "    SA  1, -X\"23AA",              1,  7,  8),
@@ -356,6 +380,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                6,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    SC  2, O\"36723",              2,  8,  4),
                     micro1::Token(micro1::TokenKind::INTEGER, "    SC  2, O\"36723",              1,  8,  8),
@@ -369,6 +394,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                7,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    BIX 3, +O\"21734",             3,  9,  4),
                     micro1::Token(micro1::TokenKind::INTEGER, "    BIX 3, +O\"21734",             1,  9,  8),
@@ -383,6 +409,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                8,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    SL  0, -O\"3234",              2, 10,  4),
                     micro1::Token(micro1::TokenKind::INTEGER, "    SL  0, -O\"3234",              1, 10,  8),
@@ -397,6 +424,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                9,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    SA  1, B\"1010100",            2, 11,  4),
                     micro1::Token(micro1::TokenKind::INTEGER, "    SA  1, B\"1010100",            1, 11,  8),
@@ -410,6 +438,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                10,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    SC  2, +B\"101010110010110",   2, 12,  4),
                     micro1::Token(micro1::TokenKind::INTEGER, "    SC  2, +B\"101010110010110",   1, 12,  8),
@@ -424,6 +453,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                11,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    BIX 3, -B\"10101001001",       3, 13,  4),
                     micro1::Token(micro1::TokenKind::INTEGER, "    BIX 3, -B\"10101001001",       1, 13,  8),
@@ -438,6 +468,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                12,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "END",                              3, 14,  0)
                 },
@@ -457,6 +488,7 @@ namespace {
         micro1::Rows expected = {
             micro1::Row(
                 "",
+                0,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "TITLE InputForParserGROUP4",       5,  1,  0),
                     micro1::Token(micro1::TokenKind::STRING,  "TITLE InputForParserGROUP4",      20,  1,  6)
@@ -466,6 +498,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                0,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    LEA 0,87 (3) ",                3,  2,  4),
                     micro1::Token(micro1::TokenKind::INTEGER, "    LEA 0,87 (3) ",                1,  2,  8),
@@ -480,6 +513,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                1,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    LX  1, +124 (0)",              2,  3,  4),
                     micro1::Token(micro1::TokenKind::INTEGER, "    LX  1, +124 (0)",              1,  3,  8),
@@ -495,6 +529,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                2,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    STX 2, -93 (1)",               3,  4,  4),
                     micro1::Token(micro1::TokenKind::INTEGER, "    STX 2, -93 (1)",               1,  4,  8),
@@ -510,6 +545,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                3,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    LEA 3, X\"39 (2)",             3,  5,  4),
                     micro1::Token(micro1::TokenKind::INTEGER, "    LEA 3, X\"39 (2)",             1,  5,  8),
@@ -526,6 +562,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                4,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    LX  0, +X\"C23 (3)",           2,  6,  4),
                     micro1::Token(micro1::TokenKind::INTEGER, "    LX  0, +X\"C23 (3)",           1,  6,  8),
@@ -543,6 +580,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                5,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    STX 1, -X\"23D (0)",           3,  7,  4),
                     micro1::Token(micro1::TokenKind::INTEGER, "    STX 1, -X\"23D (0)",           1,  7,  8),
@@ -560,6 +598,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                6,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    LEA 2, O\"3723 (1)",           3,  8,  4),
                     micro1::Token(micro1::TokenKind::INTEGER, "    LEA 2, O\"3723 (1)",           1,  8,  8),
@@ -576,6 +615,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                7,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    LX  3, +O\"3243 (2)",          2,  9,  4),
                     micro1::Token(micro1::TokenKind::INTEGER, "    LX  3, +O\"3243 (2)",          1,  9,  8),
@@ -593,6 +633,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                8,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    STX 0, -O\"42 (3)",            3, 10,  4),
                     micro1::Token(micro1::TokenKind::INTEGER, "    STX 0, -O\"42 (3)",            1, 10,  8),
@@ -610,6 +651,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                9,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    LEA 1, B\"10101101 (0)",       3, 11,  4),
                     micro1::Token(micro1::TokenKind::INTEGER, "    LEA 1, B\"10101101 (0)",       1, 11,  8),
@@ -626,6 +668,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                10,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    LX  2, +B\"11010 (1)",         2, 12,  4),
                     micro1::Token(micro1::TokenKind::INTEGER, "    LX  2, +B\"11010 (1)",         1, 12,  8),
@@ -643,6 +686,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                11,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    STX 3, -B\"10010111 (2)",      3, 13,  4),
                     micro1::Token(micro1::TokenKind::INTEGER, "    STX 3, -B\"10010111 (2)",      1, 13,  8),
@@ -660,6 +704,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                12,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    LEA 0, (3)",                   3, 14,  4),
                     micro1::Token(micro1::TokenKind::INTEGER, "    LEA 0, (3)",                   1, 14,  8),
@@ -673,6 +718,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                13,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "END",                              3, 15,  0)
                 },
@@ -692,6 +738,7 @@ namespace {
         micro1::Rows expected = {
             micro1::Row(
                 "",
+                0,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "TITLE InputForParserGROUP5",       5,  1,  0),
                     micro1::Token(micro1::TokenKind::STRING,  "TITLE InputForParserGROUP5",      20,  1,  6)
@@ -701,6 +748,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                0,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "      L  0, *",                    1,  2,  6),
                     micro1::Token(micro1::TokenKind::INTEGER, "      L  0, *",                    1,  2,  9),
@@ -712,6 +760,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                1,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "      ST 1, * + 8",                2,  3,  6),
                     micro1::Token(micro1::TokenKind::INTEGER, "      ST 1, * + 8",                1,  3,  9),
@@ -725,6 +774,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                2,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "      LA 2, * - 92",               2,  4,  6),
                     micro1::Token(micro1::TokenKind::INTEGER, "      LA 2, * - 92",               1,  4,  9),
@@ -738,6 +788,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                3,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "      ORG 100",                    3,  5,  6),
                     micro1::Token(micro1::TokenKind::INTEGER, "      ORG 100",                    3,  5, 10)
@@ -747,6 +798,7 @@ namespace {
             ),
             micro1::Row(
                 "HOGE",
+                256,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "HOGE: L  3, HOGE",                 1,  6,  6),
                     micro1::Token(micro1::TokenKind::INTEGER, "HOGE: L  3, HOGE",                 1,  6,  9),
@@ -758,6 +810,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                257,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "      ST 0, HOGE + 23",            2,  7,  6),
                     micro1::Token(micro1::TokenKind::INTEGER, "      ST 0, HOGE + 23",            1,  7,  9),
@@ -771,6 +824,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                258,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "      LA 1, HOGE - 12",            2,  8,  6),
                     micro1::Token(micro1::TokenKind::INTEGER, "      LA 1, HOGE - 12",            1,  8,  9),
@@ -784,6 +838,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                259,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "END",                              3,  9,  0)
                 },
@@ -803,6 +858,7 @@ namespace {
         micro1::Rows expected = {
             micro1::Row(
                 "",
+                0,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "TITLE InputForParserGROUP6",       5,  1,  0),
                     micro1::Token(micro1::TokenKind::STRING,  "TITLE InputForParserGROUP6",      20,  1,  6)
@@ -812,6 +868,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                0,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "         BDIS *",                  4,  2,  9),
                     micro1::Token(micro1::TokenKind::STAR,    "         BDIS *",                  1,  2, 14)
@@ -821,6 +878,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                1,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "         BP   * + 34",             2,  3,  9),
                     micro1::Token(micro1::TokenKind::STAR,    "         BP   * + 34",             1,  3, 14),
@@ -832,6 +890,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                2,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "         BZ   * - 32",             2,  4,  9),
                     micro1::Token(micro1::TokenKind::STAR,    "         BZ   * - 32",             1,  4, 14),
@@ -843,6 +902,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                3,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "         ORG 10",                  3,  5,  9),
                     micro1::Token(micro1::TokenKind::INTEGER, "         ORG 10",                  2,  5, 13)
@@ -852,6 +912,7 @@ namespace {
             ),
             micro1::Row(
                 "SAMPLE",
+                16,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "SAMPLE:  BM   SAMPLE",             2,  6,  9),
                     micro1::Token(micro1::TokenKind::STRING,  "SAMPLE:  BM   SAMPLE",             6,  6, 14)
@@ -861,6 +922,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                17,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "         BC   SAMPLE + 23",        2,  7,  9),
                     micro1::Token(micro1::TokenKind::STRING,  "         BC   SAMPLE + 23",        6,  7, 14),
@@ -872,6 +934,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                18,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "         BNP  SAMPLE - 3",         3,  8,  9),
                     micro1::Token(micro1::TokenKind::STRING,  "         BNP  SAMPLE - 3",         6,  8, 14),
@@ -883,6 +946,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                19,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "         BNZ  *",                  3,  9,  9),
                     micro1::Token(micro1::TokenKind::STAR,    "         BNZ  *",                  1,  9, 14)
@@ -892,6 +956,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                20,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "         BNM  * + 87",             3, 10,  9),
                     micro1::Token(micro1::TokenKind::STAR,    "         BNM  * + 87",             1, 10, 14),
@@ -903,6 +968,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                21,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "         BNC  * - 98",             3, 11,  9),
                     micro1::Token(micro1::TokenKind::STAR,    "         BNC  * - 98",             1, 11, 14),
@@ -914,6 +980,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                22,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "         B    SAMPLE",             1, 12,  9),
                     micro1::Token(micro1::TokenKind::STRING,  "         B    SAMPLE",             6, 12, 14)
@@ -923,6 +990,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                23,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "         BI   SAMPLE + 81",        2, 13,  9),
                     micro1::Token(micro1::TokenKind::STRING,  "         BI   SAMPLE + 81",        6, 13, 14),
@@ -934,6 +1002,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                24,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "         BSR  SAMPLE - 98",        3, 14,  9),
                     micro1::Token(micro1::TokenKind::STRING,  "         BSR  SAMPLE - 98",        6, 14, 14),
@@ -945,6 +1014,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                25,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "END",                              3, 15,  0)
                 },
@@ -964,6 +1034,7 @@ namespace {
         micro1::Rows expected = {
             micro1::Row(
                 "",
+                0,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "TITLE InputForParserGROUP7",       5,  1,  0),
                     micro1::Token(micro1::TokenKind::STRING,  "TITLE InputForParserGROUP7",      20,  1,  6)
@@ -973,6 +1044,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                0,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    RIO CR",                       3,  2,  4),
                     micro1::Token(micro1::TokenKind::STRING,  "    RIO CR",                       2,  2,  8)
@@ -982,6 +1054,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                1,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    WIO LPT",                      3,  3,  4),
                     micro1::Token(micro1::TokenKind::STRING,  "    WIO LPT",                      3,  3,  8)
@@ -991,6 +1064,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                2,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    RIO 0",                        3,  4,  4),
                     micro1::Token(micro1::TokenKind::INTEGER, "    RIO 0",                        1,  4,  8)
@@ -1000,6 +1074,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                3,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    WIO 1",                        3,  5,  4),
                     micro1::Token(micro1::TokenKind::INTEGER, "    WIO 1",                        1,  5,  8)
@@ -1009,6 +1084,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                4,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "END",                              3,  6,  0)
                 },
@@ -1028,6 +1104,7 @@ namespace {
         micro1::Rows expected = {
             micro1::Row(
                 "",
+                0,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "TITLE InputForParserGROUP8",       5,  1,  0),
                     micro1::Token(micro1::TokenKind::STRING,  "TITLE InputForParserGROUP8",      20,  1,  6)
@@ -1037,6 +1114,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                0,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    RET",                          3,  2,  4)
                 },
@@ -1045,6 +1123,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                1,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    NOP",                          3,  3,  4)
                 },
@@ -1053,6 +1132,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                2,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "    HLT",                          3,  4,  4)
                 },
@@ -1061,6 +1141,7 @@ namespace {
             ),
             micro1::Row(
                 "",
+                3,
                 {
                     micro1::Token(micro1::TokenKind::STRING,  "END",                              3,  5,  0)
                 },

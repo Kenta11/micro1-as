@@ -29,6 +29,7 @@
 #define PARSER_H
 
 #include "token.h"
+#include "micro1.h"
 
 namespace micro1 {
 
@@ -141,16 +142,22 @@ public:
     /**
      * @brief Constructor for Row
      * @param[in] label label name in a line
+     * @param[in] address
      * @param[in] instruction tokens which make up a instruction
      * @param[in] dinfo debug information
      * @param[in] raddr address referenced by the instruction
      */
-    Row(std::string label, Tokens instruction, DebugInfo dinfo, ReferenceAddress raddr) : m_label(label), m_instruction(instruction), m_dinfo(dinfo), m_raddr(raddr) {}
+    Row(std::string label, M1Addr addr, Tokens instruction, DebugInfo dinfo, ReferenceAddress raddr) : m_label(label), m_addr(addr), m_instruction(instruction), m_dinfo(dinfo), m_raddr(raddr) {}
     /**
      * @brief Getter for m_label
      * @return std::string label name in a line
      */
     std::string label() const { return m_label; }
+    /**
+     * @brief Getter for m_addr
+     * @return M1Addr address
+     */
+    M1Addr addr() const { return m_addr; }
     /**
      * @brief Getter for m_instruction
      * @return Tokens tokens which make up a instruction
@@ -172,6 +179,7 @@ public:
      */
     bool operator==(Row r) const {
         return m_label == r.label() &&
+               m_addr == r.addr() &&
                m_instruction == r.instruction() &&
                m_dinfo == r.dinfo() &&
                m_raddr == r.raddr();
@@ -182,6 +190,7 @@ public:
      */
     bool operator!=(Row r) const {
         return m_label != r.label() ||
+               m_addr != r.addr() ||
                m_instruction != r.instruction() ||
                m_dinfo != r.dinfo() ||
                m_raddr != r.raddr();
@@ -189,6 +198,7 @@ public:
 
 private:
     std::string m_label;       //! label name in a line
+    M1Addr m_addr;             //! address
     Tokens m_instruction;      //! instruction tokens which make up a instruction
     DebugInfo m_dinfo;         //! debug information
     ReferenceAddress m_raddr;  //! address referenced by the instruction
