@@ -19,28 +19,27 @@
 // DEALINGS IN THE SOFTWARE.
 
 /**
- * @file micro1.h
- * @brief Type definition for MICRO-1
+ * @file symbol.h
+ * @brief Declaration for symbol resolver for MICRO-1 assembly program
  * @author Kenta Arai
- * @date 2020/05/24
+ * @date 2020/06/28
  */
 
-#ifndef MICRO1_H
-#define MICRO1_H
+#ifndef SYMBOL_H
+#define SYMBOL_H
 
-#include <cstdint>
+#include "parser.h"
+
+#include <map>
 
 namespace micro1 {
 
-/**
- * @brief MICRO-1 MM address
- */
-typedef std::uint16_t M1Addr;
-/**
- * @brief MICRO-1 MM data
- */
-typedef std::uint16_t M1Word;
+std::map<std::string, micro1::M1Addr>
+generateSymbolTable(Rows rows);
+
+Rows
+resolveSymbols(Rows rows);
 
 }  // namespace micro1
 
-#endif  // MICRO1_H
+#endif  // SYMBOL_H

@@ -29,6 +29,7 @@
 
 #include "micro1-as/instruction.h"
 #include "micro1-as/micro1.h"
+#include "micro1-as/symbol.h"
 
 #include <algorithm>
 #include <fstream>
@@ -40,41 +41,6 @@
 namespace {
 
 using TokenIterator = micro1::Tokens::iterator;
-
-std::tuple<std::vector<micro1::M1Addr>, std::map<std::string, micro1::M1Addr> >
-calculateAddress(const micro1::Rows rows) {
-    std::vector<micro1::M1Addr> addresses;
-    std::map<std::string, micro1::M1Addr> labels;
-    micro1::M1Addr addr = 0;
-
-    for (auto row : rows) {
-        if (row.instruction().size() == 0)
-            continue;
-        else if (row.instruction().at(0).str() == "TITLE")
-            continue;
-        else if (row.instruction().at(0).str() == "END")
-            continue;
-        else if (row.instruction().at(0).str() == "ORG") {
-            addr = static_cast<micro1::M1Addr>(std::stoi(row.instruction().at(1).str(), nullptr, 16));
-            continue;
-        }
-
-        if (row.label() != "")
-            labels.insert(std::make_pair(row.label(), addr));
-
-        if (row.instruction().at(0).str() == "DS" && row.dinfo().importance() == micro1::DebugInfoImportance::INFO) {
-            auto storage_size = std::stoi(row.instruction().at(1).str(), nullptr, 10);
-            for (micro1::M1Addr offset = 0; offset < storage_size; offset++) {
-                addresses.emplace_back(addr + offset);
-            }
-            addr += static_cast<micro1::M1Addr>(storage_size);
-        } else {
-            addresses.emplace_back(addr++);
-        }
-    }
-
-    return {addresses, labels};
-}
 
 uint16_t
 extractUInt(TokenIterator head) {
@@ -104,13 +70,8 @@ extractSInt(TokenIterator head) {
     return extractUInt(head);
 }
 
-uint8_t
-extractAddress(micro1::ReferenceAddress raddr, micro1::M1Addr current_address, std::map<std::string, micro1::M1Addr> labels) {
-    return 0xFF & ((raddr.label() == "*" ? 0 : labels.at(raddr.label()) - current_address) + raddr.offset());
-}
-
 std::tuple<uint8_t, std::uint8_t, std::uint8_t, std::uint8_t>
-setRegister(micro1::Row row, std::map<std::string, micro1::M1Addr> labels) {
+setRegister(micro1::Row row, std::map<std::string, micro1::M1Addr> symbol_table) {
     auto [op, ra, rb] = micro1::getEncoding(row.instruction().at(0).str());
     uint8_t nd = 0;
 
@@ -138,10 +99,10 @@ setRegister(micro1::Row row, std::map<std::string, micro1::M1Addr> labels) {
             break;
         case micro1::InstGroup::GROUP5:
             rb = std::stoi(row.instruction().at(1).str(), nullptr, 10) & 0x3;
-            nd = extractAddress(row.raddr(), row.addr(), labels);
+            nd = row.raddr().val();
             break;
         case micro1::InstGroup::GROUP6:
-            nd = extractAddress(row.raddr(), row.addr(), labels);
+            nd = row.raddr().val();
             break;
         case micro1::InstGroup::GROUP7:
             if (row.instruction().at(1).kind() == micro1::TokenKind::STRING) {
@@ -165,7 +126,7 @@ setRegister(micro1::Row row, std::map<std::string, micro1::M1Addr> labels) {
                     word = static_cast<micro1::M1Word>(row.instruction().at(1).str()[1]) << 8;
                     word += static_cast<micro1::M1Word>(row.instruction().at(1).str()[2]) & 0xFF;
                 } else /* if (row.instruction().at(1).kind() == micro1::TokenKind::STRING) */ {
-                    word = labels.at(row.instruction().at(1).str());
+                    word = symbol_table.at(row.instruction().at(1).str());
                 }
             } else if (row.instruction().at(0).str() == "DS") {
                 word = static_cast<micro1::M1Word>(std::stoi(row.instruction().at(1).str()));
@@ -203,7 +164,6 @@ namespace micro1 {
 void
 writeListingFile(const Rows rows, const std::string filename) {
     std::ofstream ofs(filename);
-    auto labels = std::get<1>(::calculateAddress(rows));
 
     if (!ofs) {
         std::cerr << "FILE " << filename << " CAN'T BE OPENED." << std::endl;
@@ -212,6 +172,8 @@ writeListingFile(const Rows rows, const std::string filename) {
 
     int64_t index = 0;
     uint64_t num_of_errors = 0;
+    auto symbol_table = micro1::generateSymbolTable(rows);
+
     for (auto row : rows) {
         if (row.instruction().size() == 0)
             continue;
@@ -220,7 +182,7 @@ writeListingFile(const Rows rows, const std::string filename) {
         if (row.dinfo().importance() == DebugInfoImportance::ERROR) {
             ofs << "F ";
             num_of_errors++;
-        } else if ((row.raddr().label() != "" && labels.find(row.raddr().label()) == labels.end()) && row.raddr().label() != "*") {
+        } else if (row.raddr().label() != "" && !row.raddr().resolved()) {
             ofs << "F ";
             num_of_errors++;
         } else {
@@ -243,7 +205,7 @@ writeListingFile(const Rows rows, const std::string filename) {
                     ofs << ' ';
                 }
             } else {
-                auto [op, ra, rb, nd] = ::setRegister(row, labels);
+                auto [op, ra, rb, nd] = ::setRegister(row, symbol_table);
                 if (row.instruction().at(0).str() == "DC") {
                     ofs << std::hex << std::uppercase << static_cast<uint32_t>(op);
                     ofs << std::hex << std::uppercase << static_cast<uint32_t>((ra << 2) + rb);
@@ -293,7 +255,7 @@ writeListingFile(const Rows rows, const std::string filename) {
 
     // output labels
     ofs << "LABEL(S)" << std::endl;
-    for (auto [key, value] : labels) {
+    for (auto [key, value] : symbol_table) {
         ofs << key << ": ";
         ofs << std::hex << std::setw(4) << std::setfill('0') << value;
         ofs << "    ";
@@ -331,13 +293,13 @@ printSyntaxError(const Rows rows) {
         }
     }
 
-    auto labels = std::get<1>(::calculateAddress(rows));
+    auto symbol_table = micro1::generateSymbolTable(rows);
 
     for (auto row : rows) {
         if (row.raddr().label() == "" || row.raddr().label() == "*")
             continue;
 
-        if (labels.find(row.raddr().label()) == labels.end()) {
+        if (symbol_table.find(row.raddr().label()) == symbol_table.end()) {
             auto number_of_row = row.instruction().at(0).row();
 
             // print "{row}:{message}"
@@ -358,16 +320,6 @@ writeObjectFile(const Rows rows, const std::string filename) {
     if (std::count_if(rows.begin(), rows.end(), [](auto row) { return row.dinfo().importance() == DebugInfoImportance::ERROR; }) != 0)
         return false;
 
-    auto labels = std::get<1>(::calculateAddress(rows));
-    for (auto row : rows) {
-        if (row.raddr().label() == "" || row.raddr().label() == "*")
-            continue;
-
-        if (labels.find(row.raddr().label()) == labels.end()) {
-            return false;
-        }
-    }
-
     std::ofstream ofs(filename);
     if (!ofs) {
         std::cerr << "FILE " << filename << " CAN'T BE OPENED." << std::endl;
@@ -375,6 +327,7 @@ writeObjectFile(const Rows rows, const std::string filename) {
     }
 
     int64_t index = 0;
+    auto symbol_table = micro1::generateSymbolTable(rows);
     for (auto row : rows) {
         if (row.instruction().size() == 0)
             continue;
@@ -386,7 +339,7 @@ writeObjectFile(const Rows rows, const std::string filename) {
             ofs << std::hex << std::setw(4) << std::setfill('0') << std::uppercase << row.addr();
             ofs << "  ";
 
-            auto [op, ra, rb, nd] = ::setRegister(row, labels);
+            auto [op, ra, rb, nd] = ::setRegister(row, symbol_table);
             M1Word word = op;
             word = (word << 2) + ra;
             word = (word << 2) + rb;

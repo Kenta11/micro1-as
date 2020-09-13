@@ -28,6 +28,7 @@
 #include "micro1-as/backend.h"
 #include "micro1-as/lexer.h"
 #include "micro1-as/parser.h"
+#include "micro1-as/symbol.h"
 #include "micro1-as/version.h"
 
 #include <cctype>
@@ -101,15 +102,17 @@ assemble(const string filename, const bool flagWritingListingFile) {
     }
 
     auto tokens = micro1::tokenize(ifs);
-    auto lines = micro1::parse(tokens);
+    auto rows = micro1::parse(tokens);
+
+    rows = micro1::resolveSymbols(rows);
 
     if (flagWritingListingFile) {
-        micro1::writeListingFile(lines, removeExtension(filename) + ".a");
+        micro1::writeListingFile(rows, removeExtension(filename) + ".a");
     } else {
-        micro1::printSyntaxError(lines);
+        micro1::printSyntaxError(rows);
     }
 
-    return micro1::writeObjectFile(lines, removeExtension(filename) + ".b");
+    return micro1::writeObjectFile(rows, removeExtension(filename) + ".b");
 }
 
 /**

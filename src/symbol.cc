@@ -19,28 +19,46 @@
 // DEALINGS IN THE SOFTWARE.
 
 /**
- * @file micro1.h
- * @brief Type definition for MICRO-1
+ * @file symbol.cc
+ * @brief Implementation for symbol resolver for MICRO-1 assembly program
  * @author Kenta Arai
- * @date 2020/05/24
+ * @date 2020/06/28
  */
 
-#ifndef MICRO1_H
-#define MICRO1_H
-
-#include <cstdint>
+#include "micro1-as/symbol.h"
 
 namespace micro1 {
 
-/**
- * @brief MICRO-1 MM address
- */
-typedef std::uint16_t M1Addr;
-/**
- * @brief MICRO-1 MM data
- */
-typedef std::uint16_t M1Word;
+std::map<std::string, micro1::M1Addr>
+generateSymbolTable(Rows rows) {
+    std::map<std::string, micro1::M1Addr> symbol_table;
+
+    for (auto row : rows) {
+        if (row.label() != "")
+            symbol_table.insert(std::make_pair(row.label(), row.addr()));
+    }
+
+    return symbol_table;
+}
+
+Rows
+resolveSymbols(Rows rows) {
+    auto symbol_table = generateSymbolTable(rows);
+
+    for (auto & row : rows) {
+        if (row.raddr().label() == "*") {
+            auto r = row.raddr();
+            r.val(r.offset());
+            row.raddr(r);
+        }
+        else if (symbol_table.find(row.raddr().label()) != symbol_table.end()) {
+            auto r = row.raddr();
+            r.val(symbol_table.at(row.raddr().label()) - row.addr() + r.offset());
+            row.raddr(r);
+        }
+    }
+
+    return rows;
+}
 
 }  // namespace micro1
-
-#endif  // MICRO1_H

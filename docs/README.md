@@ -40,3 +40,4 @@ If you would like to understand the implementation of `micro1-as`, run `doxygen`
 
 - Lexical analyzer: [lexer.md](lexer.md)
 - Syntatic analyzer: [parser.md](parser.md)
+- Symbol resolver: [symbol.md](symbol.md)

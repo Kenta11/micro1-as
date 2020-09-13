@@ -31,6 +31,8 @@
 #include "micro1.h"
 #include "token.h"
 
+#include <iostream>
+
 namespace micro1 {
 
 /**
@@ -101,7 +103,7 @@ public:
      * @param[in] label label name of the referenced address
      * @param[in] offset of address
      */
-    ReferenceAddress(std::string label, int64_t offset) : m_label(label), m_offset(offset) {}
+    ReferenceAddress(std::string label, int64_t offset, M1Addr val = 0) : m_label(label), m_offset(offset), m_val(val), m_resolved(false) {}
     /**
      * @brief Getter for m_label
      * @return std::string label name
@@ -113,11 +115,31 @@ public:
      */
     int64_t offset() const { return m_offset; }
     /**
+     * @brief Getter for m_offset
+     * @return int64_t offset of address
+     */
+    M1Addr val() const { return m_val; }
+    /**
+     * @brief Getter for m_offset
+     * @return int64_t offset of address
+     */
+    void val(M1Addr val_) {
+        m_val = static_cast<M1Addr>(val_);
+        m_resolved = true;
+    }
+    /**
+     * @brief Getter for m_resolved
+     * @return bool if address is resolved, true
+     */
+    bool resolved() const { return m_resolved; }
+    /**
      * @brief Operator '==' for ReferenceAddress
      * @return Result of comparing two ReferenceAddress objects
      */
     bool operator==(ReferenceAddress a) const {
         return m_label == a.label() &&
+               m_val == a.val() &&
+               m_resolved == a.resolved() &&
                m_offset == a.offset();
     }
     /**
@@ -126,12 +148,16 @@ public:
      */
     bool operator!=(ReferenceAddress a) const {
         return m_label != a.label() ||
+               m_val != a.val() ||
+               m_resolved != a.resolved() ||
                m_offset != a.offset();
     }
 
 private:
-    std::string m_label;  //! label name
+    std::string m_label;  // ! label name
     int64_t m_offset;     // ! offset of address
+    M1Addr m_val;         // ! address
+    bool m_resolved;      // ! true if address is resolved
 };
 
 /**
@@ -173,6 +199,13 @@ public:
      * @return ReferencedAddress address referenced by the instruction
      */
     ReferenceAddress raddr() const { return m_raddr; }
+    /**
+     * @brief Setter for m_raddr
+     * @return
+     */
+    void raddr(ReferenceAddress raddr_) {
+        m_raddr = raddr_;
+    }
     /**
      * @brief Operator '==' for Row
      * @return Result of comparing two rows
