@@ -107,11 +107,7 @@ public:
      * @return Result of comparing two tokens
      */
     bool operator!=(Token t) const {
-        return m_kind != t.kind() ||
-               m_line != t.line() ||
-               m_row != t.row() ||
-               m_column != t.column() ||
-               str() != t.str();
+        return !(*this == t);
     }
 
 private:

@@ -82,9 +82,7 @@ public:
      * @return Result of comparing two DebugInfo objects
      */
     bool operator!=(DebugInfo d) const {
-        return m_importance != d.importance() ||
-               m_message != d.message() ||
-               m_index != d.index();
+        return !(*this == d);
     }
 
 private:
@@ -147,10 +145,7 @@ public:
      * @return Result of comparing two ReferenceAddress objects
      */
     bool operator!=(ReferenceAddress a) const {
-        return m_label != a.label() ||
-               m_val != a.val() ||
-               m_resolved != a.resolved() ||
-               m_offset != a.offset();
+        return !(*this == a);
     }
 
 private:
@@ -222,11 +217,7 @@ public:
      * @return Result of comparing two rows
      */
     bool operator!=(Row r) const {
-        return m_label != r.label() ||
-               m_addr != r.addr() ||
-               m_instruction != r.instruction() ||
-               m_dinfo != r.dinfo() ||
-               m_raddr != r.raddr();
+        return !(*this == r);
     }
 
 private:
