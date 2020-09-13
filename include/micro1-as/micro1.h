@@ -35,11 +35,11 @@ namespace micro1 {
 /**
  * @brief MICRO-1 MM address
  */
-typedef std::uint16_t M1Addr;
+using M1Addr = std::uint16_t;
 /**
  * @brief MICRO-1 MM data
  */
-typedef std::uint16_t M1Word;
+using M1Word = std::uint16_t;
 
 }  // namespace micro1
 

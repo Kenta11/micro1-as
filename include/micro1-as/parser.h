@@ -231,7 +231,7 @@ private:
 /**
  * @brief Vector for row
  */
-typedef std::vector<Row> Rows;
+using Rows = std::vector<Row>;
 
 /**
  * @brief Parse lexical tokens

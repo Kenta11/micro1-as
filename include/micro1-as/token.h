@@ -121,7 +121,7 @@ private:
 /**
  * @brief Vector for token
  */
-typedef std::vector<Token> Tokens;
+using Tokens = std::vector<Token>;
 
 }  // namespace micro1
 
