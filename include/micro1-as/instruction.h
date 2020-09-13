@@ -91,10 +91,6 @@ public:
      * @return uint8_t nd encoding
      */
     uint8_t nd() const { return static_cast<uint8_t>(m_value & 0xF); }
-    /**
-     * @brief Setter for constant value to nd
-     */
-    void setND(uint8_t nd) { m_value = (m_value & 0xFF00) | static_cast<uint16_t>(nd); }
 };
 
 /**
