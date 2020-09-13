@@ -90,11 +90,11 @@ removeExtension(const string filename) {
 /**
  * @brief Assemble MICRO-1 source program
  * @param[in] filename a file name which source program
- * @param[in] flagWritingListingFile If true, the function writes a listing file. If false, it prints syntax errors.
+ * @param[in] mode If 'w', write a listing file. If 'p', print syntax errors.
  * @return bool if true, the source program is correct syntactically
  */
 bool
-assemble(const string filename, const bool flagWritingListingFile) {
+assemble(const string filename, const char mode) {
     std::ifstream ifs(filename);
     if (ifs.fail()) {
         cerr << "ERROR: FILE NOT FOUND" << endl;
@@ -103,13 +103,18 @@ assemble(const string filename, const bool flagWritingListingFile) {
 
     auto tokens = micro1::tokenize(ifs);
     auto rows = micro1::parse(tokens);
-
     rows = micro1::resolveSymbols(rows);
 
-    if (flagWritingListingFile) {
-        micro1::writeListingFile(rows, removeExtension(filename) + ".a");
-    } else {
-        micro1::printSyntaxError(rows);
+    switch (mode) {
+        case 'w':
+            micro1::writeListingFile(rows, removeExtension(filename) + ".a");
+            break;
+        case 'p':
+            micro1::printSyntaxError(rows);
+            break;
+        default:
+            cerr << "WARNING: mode `" << mode << "` not found." << endl;
+            break;
     }
 
     return micro1::writeObjectFile(rows, removeExtension(filename) + ".b");
@@ -143,7 +148,7 @@ main(const int argc, const char **argv) {
             cout << endl
                  << " START ?";
             std::getline(cin, line);
-            if (assemble(filename, true)) {
+            if (assemble(filename, 'w')) {
                 cout << " NORMAL TERMINATION !" << endl;
             }
 
@@ -156,7 +161,7 @@ main(const int argc, const char **argv) {
             } while (yn != 'y' && yn != 'n');
         } while (yn == 'y');
     } else if (mode == "command") {
-        if (!assemble(string(argv[1]), false))
+        if (!assemble(string(argv[1]), 'p'))
             return 1;
     }
 
